@@ -14,7 +14,7 @@ const deleteCustomerById = require('./controllers/deleteCustomerById');
 app.use('/api/customers', getAllCustomers);
 app.use('/api/customers/byId', getCustomerById);
 app.use('/api/customers/byAttribute', getCustomersByAttribute);
-app.use('/api/customers/delete', deleteCustomerById);
+app.use('/api/customers/deleteCustomerById', deleteCustomerById);
  
 
 
