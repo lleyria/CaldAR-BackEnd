@@ -4,12 +4,12 @@ const app = express();
 const path = require('path');
 //api calls
 const getAllCustomers = require('./controllers/getAllCustomers');
-const getCustomerById = require('./controllers/deleteCustomerById');
-const getCustomersByAttribute = require('./controllers/getCustomersByAttribute');
+const getCustomerById = require('./controllers/getCustomerById');
+// const getCustomersByAttribute = require('./controllers/getCustomersByAttribute');
 const deleteCustomerById = require('./controllers/deleteCustomerById');
 //url path 
 app.use('/api/customers', getAllCustomers);
-app.use('/api/customers/byAttribute', getCustomersByAttribute);
+// app.use('/api/customers/byAttribute', getCustomersByAttribute);
 app.use('/api/customers', getCustomerById);
 app.use('/api/customers', deleteCustomerById);
 //listener
