@@ -1,19 +1,17 @@
-const path = require('path');
+  const path = require('path');
 const express = require('express');
 const router = express.Router();
 const customers = require('../data/CUSTOMER_DATA.json');
-
-router.get('/:id', (req, res) =>{
-    const found = customers.some(customer => customer.id === parseInt(req.params.id));
-    if(found){
-        res.json(customers.filter(customer => customer.id === parseInt(req.params.id)));
-    } else {
-        res.status(400).json({msg: `We cannot find the customer with the Id of ${req.params.id}`});
+if(Object.keys(req.query).length === 0) {
+    //to make sure customers call keeps working
+        res.json(customers);
+    } else{
+        console.log('req.query', req.query);
+        const found = customers.some(customer => customer.id === parseInt(req.query.id));
+        if(found){
+            res.json(customers.filter(customer => customer.id === parseInt(req.query.id)));
+        } else {
+            res.status(404).json({msg: `we cannot find the customer with the id  ${req.query.id}`});
+        }        
     }
-    
-});
-
-
-
-
 module.exports = router;

@@ -3,31 +3,57 @@ const express = require('express');
 const router = express.Router();
 const customers = require('../data/CUSTOMER_DATA.json');
 const { response } = require('express');
-
-
-
-
 //by attribute
+router.get('/:attribute/:value', (req, res) => {
+    // const numberFound = customers.some(customer => customer[req.query.attribute] === parseInt(req.query.value));
+    // const stringFound = customers.some(customer => customer[req.query.attribute] === req.query.value);
+    // console.log('req.query.attribute', req.query.attribute);
+    // console.log('req.query.value', req.query.value);
 
-router.get('/:id', (req, res) => {
-    res.json(req.query.id)
 
+    // if(Object.keys(req.query).length === 0) {
+    //     res.json(customers)
+    // } else{
+    //     console.log('req.query', req.query);
+    //     const found = customers.some(customer => customer.id === parseInt(req.query.id));
+    //     if(found){
+    //         res.json(customers.filter(customer => customer.id === parseInt(req.query.id)));
+    //     } else {
+    //         res.status(404).json({msg: `we cannot find the customer with the id  ${req.query.id}`});
+    //     }
+        
+    // }
 });
 
 
-// router.get('/:attribute/:value', (req, res) => {
-    
-//     const numberFound = customers.some(customer => customer[req.params.attribute] === parseInt(req.params.value));
-//     const stringFound = customers.some(customer => customer[req.params.attribute] === req.params.value);
-    
-//     if(numberFound){
-//         res.json(customers.filter(customer => customer[req.params.attribute] === parseInt(req.params.value)));
-//     } else if(stringFound){
-//         res.json(customers.filter(customer => customer[req.params.attribute] === (req.params.value)));
-//     } else {
-//         res.status(404).json({msg: `No value for ${req.params.value} or attribute like  ${req.params.attribute}`});
+
+
+
+
+
+
+
+
+
+
+
+// router.get('/', (req, res) => {
+//     if(Object.keys(req.query).length === 0) {
+//         res.json(customers)
+//     } else{
+//         console.log('req.query', req.query);
+//         const found = customers.some(customer => customer.id === parseInt(req.query.id));
+//         if(found){
+//             res.json(customers.filter(customer => customer.id === parseInt(req.query.id)));
+//         } else {
+//             res.status(404).json({msg: `we cannot find the customer with the id  ${req.query.id}`});
+//         }
+        
 //     }
 // });
+
+
+
 
 module.exports = router;
 
