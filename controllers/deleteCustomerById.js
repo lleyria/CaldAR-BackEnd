@@ -5,7 +5,7 @@ const customers = require('../data/CUSTOMER_DATA.json');
  router.delete('/', (req, res) => {
     if(Object.keys(req.query).length === 0) {
         //to make sure customers call keeps working
-        res.json(customers)
+        res.json({msg: 'No customer was deleted', customers});         
         } else{
             const found = customers.some(customer => customer.id === parseInt(req.query.id));
             if(found){
