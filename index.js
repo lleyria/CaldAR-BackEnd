@@ -2,6 +2,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const fs = require('fs');
 //url paths
 app.use('/api/customers/customerbyID', require('./controllers/getCustomerById'));
 app.use('/api/customers/customerByID', require('./controllers/deleteCustomerById'));
