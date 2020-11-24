@@ -1,11 +1,11 @@
-  const path = require('path');
+const path = require('path');
 const express = require('express');
 const router = express.Router();
 const customers = require('../data/CUSTOMER_DATA.json');
 router.get('/', (req, res) => {
     if(Object.keys(req.query).length === 0) {
         //to make sure customers call keeps working
-            res.json(customers)
+        res.json(customers)
         } else{
             console.log('req.query', req.query);
             const found = customers.some(customer => customer.id === parseInt(req.query.id));
