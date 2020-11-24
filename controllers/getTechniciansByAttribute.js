@@ -8,11 +8,11 @@ router.get("/", (req, res) => {
       techniciansData.filter((technician) => technician[req.query.attribute].includes(parseInt(req.query.value)))
     );
   } else if (req.query.value !== "skillsId" && req.query.value !== "typeIds") {
-    const found = techniciansData.some((technician) => technician[req.query.attribute] == req.query.value);
+    const found = techniciansData.some(technician => technician[req.query.attribute] == req.query.value);
     if (found) {
-      res.json(techniciansData.filter((technician) => technician[req.query.attribute] == req.query.value));
+      res.json(techniciansData.filter(technician => technician[req.query.attribute] == req.query.value));
     } else {
-      res.status(404).json({ msg: `No technicians with ${req.query.attribute} of ${req.query.value}` });
+      res.status(404).json({ msg: `No technicians with ${req.query.attribute} of ${req.query.value}`});
     }
   }
 });
