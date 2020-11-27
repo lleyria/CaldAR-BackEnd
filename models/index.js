@@ -1,5 +1,9 @@
+const { DBRef } = require("mongodb");
+
 mongoose = require("mongoose");
+
 const db = {};
-db.url = "mongodb+srv://user123:user123@clustercaldar.9cacc.mongodb.net/caldAR?retryWrites=true&w=majority";
+db.mongoose = mongoose;
+db.url = "mongodb+srv://admin:admin123@clustercaldar.9cacc.mongodb.net/CaldAR?retryWrites=true&w=majority";
 
 module.exports = db;
