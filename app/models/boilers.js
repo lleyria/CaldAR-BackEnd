@@ -18,15 +18,15 @@ module.exports = (mongoose) => {
                 required: true
             },
             instalationDate: {
-                type: Timestamp,
+                type: Date,
                 required: false
             },
             fabricationDate: {
-                type: Timestamp,
+                type: Date,
                 required: true
             },
             expirationDate: {
-                type: Timestamp,
+                type: Date,
                 required: true
             },
         })
