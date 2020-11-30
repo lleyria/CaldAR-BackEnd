@@ -1,44 +1,36 @@
-const { mongoose } = require(".");
-
 module.exports = mongoose => {
     const Company = mongoose.model (
         "company",
-        mongoose.schema(
-            {
-                id: {
-                    type: String,
-                    //mongo _id
-                    required:true,
-                },
+        mongoose.Schema(
+            {                
                 name: {
                     type:String,
-                    required:true,
+                    required:true
                 },
                 email: {
                     type: String,
-                    required: true,
+                    required: true
                 },
                 contact: {
                     type: Number,
-                    required: true,
+                    required: true 
                 },
                 buildings: [{
                     type: String,
-                    required:true,
+                    required:true
                 }],
                 boilers: [{
-                type: String,
-                required:true,
+                    type: String,
+                    required:true
                 }],        
                 maintenanceHours: {
                     type: Number,
-                    required: false,
+                    required: false
                 }
-            },
-            { timestamps: true }
+            }            
         )
-    )
-    return Company
+    );
+    return Company;
 };
 
 

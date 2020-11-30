@@ -1,16 +1,18 @@
 const db = require("../models");
+const company = require("../models/company");
 const Company = db.company;
 
 //get and show all companies
 exports.findAll = (req, res) => {
     Company.find({})
-        .then( data => {
-            res.send(data);
+        .then(data => {
+            // res.json('it does something');
+             res.send(data);            
         })
-        .catch(err => {
+        .catch((err) => {
             res.status(500).send({
                 message:
-                    err.message || "error white trying to retrive companies"
+                    err.message || "error white trying to retrive companies",
             });
         });
 };
