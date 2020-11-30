@@ -65,4 +65,31 @@ exports.findOne = (req, res) => {
 
 // Get boiler by attribute
 // Update a boiler
+exports.update = (req, res) => {
+    if(!req.body){
+        return res.status(400).send ({
+            message: 'Data to update can not be empty!'
+        });
+    }
+    // Validation
+    if(!req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate){
+        res.status(400).send({ message: 'Content can not be empty'});
+        return;
+    }
+    const id = req.params.id;
+    boilers.findOneAndUpdate({id}, req.body, { useFindAndModify: false })
+    .then(data => {
+        if(!data) {
+            res.status(404).send({
+                message: `Cannot update boiler with id-${id}. Maybe boiler was not found.`
+            });
+        } else res.send({message: 'Boiler was update successfully'});
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: 'Error updating boiler with id = ' + id
+        });
+    });
+};
+
 // Delete a boiler
