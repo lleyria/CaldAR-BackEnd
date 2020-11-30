@@ -46,14 +46,19 @@ exports.findAll = (req, res) => {
 };
 
 // Get boiler by id
-exports.findId = (req, res) => {
-    boilers.findOne({id: req.query})
+exports.findOne = (req, res) => {
+    boilers.findOne({_id: req.params._id})
     .then((data) => {
-        res.send(data);
+        if(!data){
+            return res.status(404).send({
+                message: `Boiler with the id ${req.params._id} was not found`
+            })
+        }
+        res.send(data)
     })
     .catch((err) => {
         res.status(404).send({
-            message: err.message || `Boiler with the id ${req.query} not found`
+            message: err.message || 'Some error occured while retrieving boilers.'
         });
     });
 };
