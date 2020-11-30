@@ -93,3 +93,16 @@ exports.update = (req, res) => {
 };
 
 // Delete a boiler
+exports.delete = (req, res) => {
+    const id = req.params.id;
+    boilers.findOneAndRemove({id}, { useFindAndModify: false })
+    .then(data => {
+        console.log(data)
+        res.send({ message: 'boilers was removed successfully.'})
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: 'Error removing boiler with id = ' + id
+        });
+    });
+};
