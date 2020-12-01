@@ -3,23 +3,22 @@ const company = require("../controllers/companies.js");
 
 var router = require("express").Router();
 
-//Get all companies
-router.get("/", company.findAll);
+// //Get all companies
+ router.get("/", company.findAll);
 
-//Get one company (by id)
-router.get("/:id", company.findOne);
+// //Get one company (by id)
+router.get("/getById/:id", company.findOne);
 
 //Add a new company
 router.post("/", company.create);
 
-// //Update an existing company
+//Update an existing company
 router.put("/:id", company.update);
 
-//Delete a company (by id)
+// //Delete a company (by id)
 router.delete("/:id", company.deleteOne);
 
 //Get all companies with a specific attribute. (i.e: All companies called "T-Mobile")
-// this one is tricky
- router.get("/:attribute/:value", company.getByAttribute);
+router.get("/getByAttribute", company.getByAttribute);
 
 module.exports = router;

@@ -27,8 +27,7 @@ exports.findOne = (req, res) => {
                     
                 })               
             }
-            res.send(data)
-            console.log(_id);
+            res.send(data)            
         })
         .catch(err => {
             res.status(500).send({
@@ -120,7 +119,9 @@ exports.update = (req, res) => {
                 res.status(404).send({
                     message: `Cannot update the company with the id of ${req.params.id}`
                 });
-            } else res.send({ message: "Company udated!"});
+            } else {
+                res.send({ message: "Company udated!"});
+            }
         })
         .catch(err => {
             res.status(500).send({
@@ -132,4 +133,26 @@ exports.update = (req, res) => {
 
 
 //get any company by a specific attribute.
-exports.getByAttribute
+exports.getByAttribute = (req,res) => {
+    // const attribute = req.query.attribute;
+    // const value = req.query.value;
+    Company.find({[req.query.attribute]:req.query.value})
+        .then(data => {
+            if(!data) {
+                return res.status(404).send ({
+                    message: `Could not find the ${req.query.attribute} with the value
+                    of ${req.query.value}`
+                    
+                })
+            } else {
+                res.send(data);
+            }    
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || `Could not match the ${req.query.attribute} with the value
+                    of ${req.query.value}`             
+            });
+        });    
+};
