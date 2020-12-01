@@ -4,8 +4,7 @@ const boilersType = db.boilersType;
 // Create a new type of boiler
 exports.create = (req, res) => {
     //Validation
-    if(!req.body.description || !req.body.type || !req.query.maxCapacity ||
-        !req.body.temperatureRange || !req.query.weight) {
+    if(!req.body.description || !req.body.type || !req.query.maxCapacity || !req.body.temperatureRange || !req.query.weight) {
             res.status(400).send({ message: 'Content can not be empty'});
             return;
         }
