@@ -1,11 +1,15 @@
 module.exports = mongoose => {
     const Company = mongoose.model (
-        "company",
+        "companies",
         mongoose.Schema(
-            {                
+            {    
+                _id : {
+                    type: String,
+                    required: true
+                  },        
                 name: {
                     type:String,
-                    required:true
+                    required: true
                 },
                 email: {
                     type: String,
@@ -17,18 +21,17 @@ module.exports = mongoose => {
                 },
                 buildings: [{
                     type: String,
-                    required:true
+                    required: true
                 }],
                 boilers: [{
                     type: String,
-                    required:true
+                    required: true
                 }],        
                 maintenanceHours: {
                     type: Number,
-                    required: false
+                    required: true
                 }
-            }            
-        )
+        })
     );
     return Company;
 };

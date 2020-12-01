@@ -1,5 +1,5 @@
-const { route } = require('./company')
-const companyRouter = require('./company');
+const { route } = require('./companies')
+const companyRouter = require('./companies');
 
 
 
