@@ -3,34 +3,42 @@ const technicians = require("../models/technicians");
 const Technician = db.technicians;
 
 // Retrieve all technicians from the database.
-exports.findAll = (req, res) => {
-  Technician.find({})
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while retrieving technicians.",
+exports.findAll = (req, res, next) => {
+  if (Object.keys(req.query).length === 0) {
+    Technician.find({})
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || "Some error occurred while retrieving technicians.",
+        });
       });
-    });
+  } else {
+    next();
+  }
 };
 
 // Retrieve a technician with a specified id.
-exports.findById = (req, res) => {
-  Technician.findById(req.params.id)
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || `Some error occurred while retrieving technician with id ${req.params.id}`,
+exports.findById = (req, res, next) => {
+  if (Object.keys(req.query).includes("id")) {
+    Technician.findById(req.query.id)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: err.message || `Some error occurred while retrieving technician with id ${req.query.id}`,
+        });
       });
-    });
+  } else {
+    next();
+  }
 };
 
 // Get all technicians with a specified attribute.
 exports.findByAttribute = (req, res) => {
-  Technician.find({ [req.params.attribute]: req.params.value })
+  Technician.find({ [req.query.attribute]: req.query.value })
     .then((data) => {
       res.send(data);
     })
@@ -38,8 +46,8 @@ exports.findByAttribute = (req, res) => {
       res.status(500).send({
         message:
           err.message ||
-          `Some error occurred while retrieving technician with attribute ${req.params.attribute}
-           of value ${req.params.value}`,
+          `Some error occurred while retrieving technician with attribute ${req.query.attribute}
+          of value ${req.query.value}`,
       });
     });
 };
@@ -86,13 +94,13 @@ exports.create = (req, res) => {
 
 // Delete a technician with a specified id.
 exports.delete = (req, res) => {
-  Technician.findOneAndRemove({ _id: req.params.id }, { useFindAndModify: false })
+  Technician.findOneAndRemove({ _id: req.query.id }, { useFindAndModify: false })
     .then((data) => {
-      res.send(`Technician with the id ${req.params.id} was successfully removed.`);
+      res.send(`Technician with the id ${req.query.id} was successfully removed.`);
     })
     .catch((err) => {
       res.status(500).send({
-        message: `Error removed technician with id ${req.params.id}`,
+        message: `Error removed technician with id ${req.query.id}`,
       });
     });
 };
@@ -119,11 +127,11 @@ exports.update = (req, res) => {
     return;
   }
 
-  Technician.findOneAndUpdate({ _id: req.params.id }, req.body, { useFindAndModify: false })
+  Technician.findOneAndUpdate({ _id: req.query.id }, req.body, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res.status(404).send({
-          message: `Cannot update technician with id ${req.params.id}. Verify that it exists`,
+          message: `Cannot update technician with id ${req.query.id}. Verify that it exists`,
         });
       } else {
         res.send({ message: "Technician was successfully updated" });
@@ -131,7 +139,7 @@ exports.update = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: `Error updating technician with id ${req.params.id}`,
+        message: `Error updating technician with id ${req.query.id}`,
       });
     });
 };
