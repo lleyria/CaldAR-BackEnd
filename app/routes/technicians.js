@@ -1,6 +1,5 @@
-const technician = require("../controllers/technicians.js");
-
-var router = require("express").Router();
+const technician = require("../controllers/technicians");
+const router = require("express").Router();
 
 // Retrieve all technicians
 router.get("/", technician.findAll);

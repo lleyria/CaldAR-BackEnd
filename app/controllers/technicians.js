@@ -17,32 +17,29 @@ exports.findAll = (req, res) => {
 
 // Retrieve a technician with a specified id.
 exports.findById = (req, res) => {
-  Technician.findById({ _id: req.params.id })
+  Technician.findById(req.params.id)
     .then((data) => {
-      console.log(data);
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message && `Some error occurred while retrieving technician with id ${req.params.id}`,
+        message: err.message || `Some error occurred while retrieving technician with id ${req.params.id}`,
       });
     });
 };
 
 // Get all technicians with a specified attribute.
 exports.findByAttribute = (req, res) => {
-  const attribute = req.params.attribute;
-  const value = req.params.value;
-  Technician.findOne({ attribute: value })
+  Technician.find({ [req.params.attribute]: req.params.value })
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message &&
-          `Some error occurred while retrieving technician with attribute ${req.params.attribute} 
-          of value ${req.params.value}`,
+          err.message ||
+          `Some error occurred while retrieving technician with attribute ${req.params.attribute}
+           of value ${req.params.value}`,
       });
     });
 };
@@ -55,10 +52,9 @@ exports.create = (req, res) => {
     !req.body.lastName ||
     !req.body.email ||
     !req.body.boilersTypeId ||
-    !req.body.proffesionalLevel ||
+    !req.body.professionalLevel ||
     !req.body.hourRate ||
-    !req.body.monthlyCapacity ||
-    !req.body._id
+    !req.body.monthlyCapacity
   ) {
     res.status(400).send({ message: "Content cannot be empty!" });
     return;
@@ -66,12 +62,11 @@ exports.create = (req, res) => {
 
   // Create new technician
   const technician = new Technician({
-    _id: req.body.id,
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
     boilersTypeId: req.body.boilersTypeId,
-    proffesionalLevel: req.body.proffesionalLevel,
+    professionalLevel: req.body.professionalLevel,
     hourRate: req.body.hourRate,
     monthlyCapacity: req.body.monthlyCapacity,
   });
@@ -84,7 +79,7 @@ exports.create = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message && "Some error occurred while creating the technician.",
+        message: err.message || "Some error occurred while creating the technician.",
       });
     });
 };
@@ -93,7 +88,7 @@ exports.create = (req, res) => {
 exports.delete = (req, res) => {
   Technician.findOneAndRemove({ _id: req.params.id }, { useFindAndModify: false })
     .then((data) => {
-      res.send(`Technician with the id ${req.params.id} was removed successfully.`);
+      res.send(`Technician with the id ${req.params.id} was successfully removed.`);
     })
     .catch((err) => {
       res.status(500).send({
@@ -104,9 +99,35 @@ exports.delete = (req, res) => {
 
 // Update a technician with a specified id.
 exports.update = (req, res) => {
-  Technician.findOneAndUpdate({ _id: req.params.id }, req.body)
+  if (!req.body) {
+    return res.status(400).send({
+      message: "Data to update can not be empty",
+    });
+  }
+
+  // Validate request
+  if (
+    !req.body.firstName ||
+    !req.body.lastName ||
+    !req.body.email ||
+    !req.body.boilersTypeId ||
+    !req.body.professionalLevel ||
+    !req.body.hourRate ||
+    !req.body.monthlyCapacity
+  ) {
+    res.status(400).send({ message: "Content cannot be empty!" });
+    return;
+  }
+
+  Technician.findOneAndUpdate({ _id: req.params.id }, req.body, { useFindAndModify: false })
     .then((data) => {
-      res.send({ message: "Technician was successfully updated" });
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update technician with id ${req.params.id}. Verify that it exists`,
+        });
+      } else {
+        res.send({ message: "Technician was successfully updated" });
+      }
     })
     .catch((err) => {
       res.status(500).send({
