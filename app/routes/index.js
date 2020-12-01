@@ -1,2 +1,5 @@
-var router = require("express").Router();
+const router = require("express").Router();
+
+router.use('/buildings', require('./buildings'));
+
 module.exports = router;
