@@ -7,16 +7,16 @@ module.exports = (mongoose) => {
             description: {
                 type: String,
                 required: true,
-                enum: ['A', 'B', 'C', 'D']
+                enum: ['A', 'B', 'C', 'D'],
             },
             type: {
                 type: String,
                 required: true,
-                enum: ['gas', 'condensation', 'biomass', 'gasoil', 'solar']
+                enum: ['gas', 'condensation', 'biomass', 'gasoil', 'solar'],
             },
             maxCapacity: {
                 type: Number,
-                required: true
+                required: true,
             },
             temperatureRange: {
                 type: String,
@@ -24,7 +24,7 @@ module.exports = (mongoose) => {
             },
             weight: {
                 type: Number,
-                required: true
+                required: true,
             },
         })
     );

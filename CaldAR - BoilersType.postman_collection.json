@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "c0160d3f-6d4e-4ea3-9044-d8bcb6bf584f",
+		"name": "CaldAR - BoilersType",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "BoilersType - Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"description\": \"C\",\r\n  \"type\": \"gasoil\",\r\n  \"maxCapacity\": 7502.65,\r\n  \"temperatureRange\": \"30/150\",\r\n  \"weight\": 190.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/boilersType",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilersType"
+					],
+					"query": [
+						{
+							"key": "attribute",
+							"value": "maintaince_rate",
+							"disabled": true
+						},
+						{
+							"key": "value",
+							"value": "monthly",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BoilersType - Get All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/boilersType",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilersType"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BoilersType - Get by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/boilersType/5fc6d6a8b3cb5836947977b8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilersType",
+						"5fc6d6a8b3cb5836947977b8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BoilersType - Get by Attribute",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/boilersType/atr/?attribute=type&value=solar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilersType",
+						"atr",
+						""
+					],
+					"query": [
+						{
+							"key": "attribute",
+							"value": "type"
+						},
+						{
+							"key": "value",
+							"value": "solar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BoilersType - Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \r\n    \"description\": \"B\",\r\n    \"type\": \"biomass\",\r\n    \"maxCapacity\": 5002.65,\r\n    \"temperatureRange\": \"10/100\",\r\n    \"weight\": 150\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/boilersType/5fc6d6a8b3cb5836947977b8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilersType",
+						"5fc6d6a8b3cb5836947977b8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BoilersType - Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"description\": \"D\",\r\n  \"type\": \"gasoil\",\r\n  \"maxCapacity\": 6502.65,\r\n  \"temperatureRange\": \"30/150\",\r\n  \"weight\": 250.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/boilersType/5fc6d903bb65b90dd858b688",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilersType",
+						"5fc6d903bb65b90dd858b688"
+					],
+					"query": [
+						{
+							"key": "attribute",
+							"value": "maintaince_rate",
+							"disabled": true
+						},
+						{
+							"key": "value",
+							"value": "monthly",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

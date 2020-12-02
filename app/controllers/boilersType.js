@@ -3,11 +3,17 @@ const boilersType = db.boilersType;
 
 // Create a new type of boiler
 exports.create = (req, res) => {
-    //Validation
-    if(!req.body.description || !req.body.type || !req.query.maxCapacity || !req.body.temperatureRange || !req.query.weight) {
+    //Validation - Malfunction
+    if(!req.body.description || !req.body.type || !req.body.maxCapacity ||
+        !req.body.temperatureRange || !req.body.weight){
+            console.log(req.body.description);
+            console.log(req.body.type);
+            console.log(req.body.maxCapacity);
+            console.log(req.body.temperatureRange);
+            console.log(req.body.weight);
             res.status(400).send({ message: 'Content can not be empty'});
             return;
-        }
+    }
     // Create a new type
     const newType = new boilersType({
         description: req.body.description,
@@ -18,15 +24,15 @@ exports.create = (req, res) => {
     });
     //Save new type
     newType
-        .save(newType)
-        .then(data => {
-            res.send(data);
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: err.message || 'Some error occurred while creating the new type'
-            });
+    .save(newType)
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || 'Some error occurred while creating the new type'
         });
+    });
 };
 
 // Get all types
@@ -88,8 +94,8 @@ exports.update = (req, res) => {
         });
     }
     // Validation
-    if(!req.body.description || !req.body.type || !req.query.maxCapacity ||
-        !req.body.temperatureRange || !req.query.weight) {
+    if(!req.body.description || !req.body.type || !req.body.maxCapacity ||
+        !req.body.temperatureRange || !req.body.weight) {
             res.status(400).send({ message: 'Content can not be empty'});
             return;
         }
