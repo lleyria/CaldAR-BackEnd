@@ -1,11 +1,11 @@
 const { restart } = require("nodemon");
 const db = require("../models");
-const company = require("../models/companies");
-const Company = db.company;
+const companies = require("../models/companies");
+const Companies = db.companies;
 
 //get and show all companies
 exports.findAll = (req, res) => {
-    Company.find({})
+    Companies.find({})
         .then(data => {             
              res.send(data);            
         })
@@ -19,7 +19,7 @@ exports.findAll = (req, res) => {
 
 //get one company (by id) and show it
 exports.findOne = (req, res) => {
-    Company.findOne({_id: req.params.id})
+    Companies.findOne({_id: req.params.id})
         .then(data => {
             if (!data) {
                 return res.status(404).send({
@@ -54,7 +54,7 @@ exports.create = (req, res) => {
       }
 
     //create the company as a new object
-    const company = new Company ({
+    const companies = new Companies ({
         _id: req.body._id,
         name: req.body.name,
         email: req.body.email,
@@ -65,8 +65,8 @@ exports.create = (req, res) => {
     });
 
     //save the object "company" in the DB
-    company
-        .save(company)
+    companies
+        .save(companies)
         .then(data => {
             res.send(data);
         })
@@ -79,7 +79,7 @@ exports.create = (req, res) => {
 };
 //get one of the companies by its ID then delete it.
 exports.deleteOne = (req,res) => {    
-    Company.deleteOne({_id: req.params.id}, { useFindAndModify: false })
+    Companies.deleteOne({_id: req.params.id}, { useFindAndModify: false })
         .then( data =>
             res.send({ message: "The company selected was deleted" })
         )
@@ -113,7 +113,7 @@ exports.update = (req, res) => {
         return;
     }
     //after both filters we do the update itself
-    Company.update({_id: req.params.id}, req.body)
+    Companies.update({_id: req.params.id}, req.body)
         .then(data => {
             if(!data) {
                 res.status(404).send({
