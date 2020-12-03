@@ -1,11 +1,10 @@
 const db = require("../models");
-const technicians = require("../models/technicians");
-const Technician = db.technicians;
+const Technicians = db.technicians;
 
 // Retrieve all technicians from the database.
 exports.findAll = (req, res, next) => {
   if (Object.keys(req.query).length === 0) {
-    Technician.find({})
+    Technicians.find({})
       .then((data) => {
         res.send(data);
       })
@@ -22,7 +21,7 @@ exports.findAll = (req, res, next) => {
 // Retrieve a technician with a specified id.
 exports.findById = (req, res, next) => {
   if (Object.keys(req.query).includes("id")) {
-    Technician.findById(req.query.id)
+    Technicians.findById(req.query.id)
       .then((data) => {
         res.send(data);
       })
@@ -38,7 +37,7 @@ exports.findById = (req, res, next) => {
 
 // Get all technicians with a specified attribute.
 exports.findByAttribute = (req, res) => {
-  Technician.find({ [req.query.attribute]: req.query.value })
+  Technicians.find({ [req.query.attribute]: req.query.value })
     .then((data) => {
       res.send(data);
     })
@@ -69,7 +68,7 @@ exports.create = (req, res) => {
   }
 
   // Create new technician
-  const technician = new Technician({
+  const technician = new Technicians({
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     email: req.body.email,
@@ -94,7 +93,7 @@ exports.create = (req, res) => {
 
 // Delete a technician with a specified id.
 exports.delete = (req, res) => {
-  Technician.findOneAndRemove({ _id: req.query.id }, { useFindAndModify: false })
+  Technicians.findOneAndRemove({ _id: req.query.id }, { useFindAndModify: false })
     .then((data) => {
       res.send(`Technician with the id ${req.query.id} was successfully removed.`);
     })
@@ -127,7 +126,7 @@ exports.update = (req, res) => {
     return;
   }
 
-  Technician.findOneAndUpdate({ _id: req.query.id }, req.body, { useFindAndModify: false })
+  Technicians.findOneAndUpdate({ _id: req.query.id }, req.body, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res.status(404).send({

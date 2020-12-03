@@ -1,22 +1,22 @@
-const technician = require("../controllers/technicians");
+const technicians = require("../controllers/technicians");
 const router = require("express").Router();
 
 // Retrieve all technicians
-router.get("/", technician.findAll);
+router.get("/", technicians.findAll);
 
 // Retrieve a single technician with id
-router.get("/", technician.findById);
+router.get("/", technicians.findById);
 
 // Get all technicians with a specific attribute
-router.get("/", technician.findByAttribute);
+router.get("/", technicians.findByAttribute);
 
 // Create a new technician
-router.post("/", technician.create);
+router.post("/", technicians.create);
 
 // Update a technician with id
-router.put("/", technician.update);
+router.put("/", technicians.update);
 
 // Delete technician with id
-router.delete("/", technician.delete);
+router.delete("/", technicians.delete);
 
 module.exports = router;

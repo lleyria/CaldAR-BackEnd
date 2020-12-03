@@ -1,5 +1,3 @@
-// const { DBRef } = require("mongodb");
-
 mongoose = require("mongoose");
 
 const db = {};

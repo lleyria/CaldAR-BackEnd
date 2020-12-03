@@ -1,6 +1,6 @@
-const technicianRouter = require("./technicians");
+const techniciansRouter = require("./technicians");
 const router = require("express").Router();
 
-router.use("/technicians", technicianRouter);
+router.use("/technicians", techniciansRouter);
 
 module.exports = router;

@@ -24,7 +24,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/technicians?id=5fc59863e1f45711c4fb1b50",
+					"raw": "http://localhost:5000/technicians",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -32,12 +32,6 @@
 					"port": "5000",
 					"path": [
 						"technicians"
-					],
-					"query": [
-						{
-							"key": "id",
-							"value": "5fc59863e1f45711c4fb1b50"
-						}
 					]
 				}
 			},
