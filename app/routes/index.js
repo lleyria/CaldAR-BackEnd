@@ -1,6 +1,6 @@
-const appointmentRouter = require("./appointments");
+const appointmentsRouter = require("./appointments");
 const router = require("express").Router();
 
-router.use("/appointments", appointmentRouter);
+router.use("/appointments", appointmentsRouter);
 
 module.exports = router;

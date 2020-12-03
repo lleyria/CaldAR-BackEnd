@@ -1,5 +1,5 @@
 module.exports = (mongoose) => {
-  const Appointment = mongoose.model(
+  const Appointments = mongoose.model(
     "appointments",
     mongoose.Schema({
       building: {
@@ -30,5 +30,5 @@ module.exports = (mongoose) => {
       },
     })
   );
-  return Appointment;
+  return Appointments;
 };

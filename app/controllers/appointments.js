@@ -1,10 +1,10 @@
 const db = require("../models");
-const Appointment = db.appointments;
+const Appointments = db.appointments;
 
 // Retrieve all appointments from the database.
 exports.findAll = (req, res, next) => {
   if (Object.keys(req.query).length === 0) {
-    Appointment.find({})
+    Appointments.find({})
       .then((data) => {
         res.send(data);
       })
@@ -21,7 +21,7 @@ exports.findAll = (req, res, next) => {
 // Retrieve an appointment by its id.
 exports.findById = (req, res, next) => {
   if (Object.keys(req.query).includes("id")) {
-    Appointment.findById(req.query.id)
+    Appointments.findById(req.query.id)
       .then((data) => {
         res.send(data);
       })
@@ -37,7 +37,7 @@ exports.findById = (req, res, next) => {
 
 // Get all appointments with a specific attribute
 exports.findByAttribute = (req, res) => {
-  Appointment.find({ [req.query.attribute]: req.query.value })
+  Appointments.find({ [req.query.attribute]: req.query.value })
     .then((data) => {
       res.send(data);
     })
@@ -67,7 +67,7 @@ exports.create = (req, res) => {
   }
 
   // Create new appointment
-  const appointment = new Appointment({
+  const appointment = new Appointments({
     building: req.body.building,
     boiler: req.body.boiler,
     technician: req.body.technician,
@@ -110,7 +110,7 @@ exports.update = (req, res) => {
     return;
   }
 
-  Appointment.findOneAndUpdate({ _id: req.query.id }, req.body, { useFindAndModify: false })
+  Appointments.findOneAndUpdate({ _id: req.query.id }, req.body, { useFindAndModify: false })
     .then((data) => {
       if (!data) {
         res.status(404).send({
@@ -129,7 +129,7 @@ exports.update = (req, res) => {
 
 // Delete an appointment with a specified id.
 exports.delete = (req, res) => {
-  Appointment.findOneAndRemove({ _id: req.query.id }, { useFindAndModify: false })
+  Appointments.findOneAndRemove({ _id: req.query.id }, { useFindAndModify: false })
     .then((data) => {
       res.send(`Appointment with the id ${req.query.id} was successfully removed.`);
     })
