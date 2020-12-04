@@ -1,0 +1,183 @@
+{
+	"info": {
+		"_postman_id": "de1bd39c-428d-42ad-94fc-9f502ba94be4",
+		"name": "Appointments",
+		"description": "This is the appointments collection REST API documentation. Here are all the necessary requests to interact with the API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Appointments - Find all",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"_id\": \"5fc693e39ef48316306b9450\",\r\n    \"building\": \"5fc6926cfc13ae3a82000000\",\r\n    \"boiler\": \"5fc6926cfc13ae3a82000004\",\r\n    \"technician\": \"5fc6926cfc13ae3a82000005\",\r\n    \"startTimeStamp\": \"2020-08-05T12:34:39.000Z\",\r\n    \"endTimeStamp\": \"2020-08-31T09:26:21.000Z\",\r\n    \"monthlyHours\": 100,\r\n    \"__v\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/appointments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Appointments - Find an appointment by its id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/appointments?id=5fc68ef36687632344ef221b",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"appointments"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "5fc68ef36687632344ef221b"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Appointments - Get all appointments with a specific attribute",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/appointments?attribute=building&value=5fc6926cfc13ae3a82000000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"appointments"
+					],
+					"query": [
+						{
+							"key": "attribute",
+							"value": "building"
+						},
+						{
+							"key": "value",
+							"value": "5fc6926cfc13ae3a82000000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Appointments - Create a new appointment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"building\": \"5fc6926cfc13ae3a82000006\",\r\n        \"boiler\": \"5fc6926cfc13ae3a82000007\",\r\n        \"technician\": \"5fc6926cfc13ae3a82000008\",\r\n        \"startTimeStamp\": \"1587160947000\",\r\n        \"endTimeStamp\": \"1584006724000\",\r\n        \"monthlyHours\": 34\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/appointments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"appointments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Appointments - Update an appointment",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"building\": \"5fc6926cfc13ae3a82000003\",\r\n        \"boiler\":  \"5fc6926cfc13ae3a82000004\",\r\n        \"technician\": \"5fc6926cfc13ae3a82000005\",\r\n        \"startTimeStamp\": \"1596630879000\",\r\n        \"endTimeStamp\": \"1598865981000\",\r\n        \"monthlyHours\": 50\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/appointments?id=5fc693e39ef48316306b9450",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"appointments"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "5fc693e39ef48316306b9450"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Appointments - Delete an appointment by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/appointments?id=5fc6986d9ef48316306b9451",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"appointments"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "5fc6986d9ef48316306b9451"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
