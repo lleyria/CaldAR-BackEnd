@@ -1,7 +1,7 @@
 const { mongo } = require("mongoose");
 
 module.exports = mongoose =>{
-    const Building = mongoose.model(
+    const buildings = mongoose.model(
         "buildings", 
         mongoose.Schema(
             {
@@ -19,5 +19,5 @@ module.exports = mongoose =>{
             {timestamps: true}
         )
     )
-    return Building
+    return buildings
 };

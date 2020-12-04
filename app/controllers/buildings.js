@@ -1,9 +1,9 @@
 const db = require('../models')
-const Building = db.building;
+const buildings = db.buildings;
 
 //Get all buildings
 exports.findAll = (req, res) =>{
-    Building.find({})
+    buildings.find({})
     .then(data => {
         res.send(data);
     })
@@ -16,7 +16,7 @@ exports.findAll = (req, res) =>{
 
 //Find Building by Id
 exports.findOne = (req, res) => {
-    Building.findOne({id:req.query.id})
+    buildings.findOne({id:req.query.id})
         .then(data => {
             if (!data) {
                 return res.status(404).send({
@@ -39,7 +39,7 @@ exports.create = (req, res) => {
          return;
      }
 
-    const build = new Building({
+    const build = new buildings({
         id: req.body.id,
         buildingName: req.body.buildingName,
         companyBuilding: req.body.companyBuilding,
@@ -73,7 +73,7 @@ exports.update = (req, res) => {
 
     const id = req.query.id;
 
-    Building.findOneAndUpdate({id}, req.body, { useFindAndModify: false })
+    buildings.findOneAndUpdate({id}, req.body, { useFindAndModify: false })
         .then(data => {
             if (!data) {
                 res.status(404).send({
@@ -92,7 +92,7 @@ exports.update = (req, res) => {
 //Delete By Id
 exports.delete = (req, res) => {
     const id = req.query.id;
-    Building.findOneAndRemove({id}, { useFindAndModify: false })
+    buildings.findOneAndRemove({id}, { useFindAndModify: false })
         .then(data =>
             res.send({ msg: "Building was removed successfully."})
         )
@@ -107,7 +107,7 @@ exports.delete = (req, res) => {
 exports.filter = (req, res) => {
     const attr = req.query.attr;
     const value = req.query.value;
-    Building.find({[attr]:value})
+    buildings.find({[attr]:value})
         .then(data => {
             if (!data) {
                 return res.status(404).send({

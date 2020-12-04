@@ -1,23 +1,23 @@
 const router = require('express').Router();
-const building = require('../controllers/buildings')
+const buildings = require('../controllers/buildings')
 
 //Get all buildings
-router.get('/', building.findAll);
+router.get('/', buildings.findAll);
 
 //Get building by id
-router.get('/byid', building.findOne);
+router.get('/byid', buildings.findOne);
 
 //Create new building
-router.post('/', building.create);
+router.post('/', buildings.create);
 
 //Update a building
-router.put('/', building.update);
+router.put('/', buildings.update);
 
 //Delete a building
-router.delete('/', building.delete);
+router.delete('/', buildings.delete);
 
 //Get buildings by Attr
-router.get('/byattr', building.filter);
+router.get('/byattr', buildings.filter);
 
 module.exports = router;
 

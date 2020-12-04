@@ -59,7 +59,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/buildings/?id=2",
+					"raw": "http://localhost:5000/buildings/byid/?id=5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -67,12 +67,13 @@
 					"port": "5000",
 					"path": [
 						"buildings",
+						"byid",
 						""
 					],
 					"query": [
 						{
 							"key": "id",
-							"value": "2"
+							"value": "5"
 						}
 					]
 				}
@@ -152,7 +153,29 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": null
+				"url": {
+					"raw": "http://localhost:5000/buildings/byattr/?attr=companyName&value=hola",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"buildings",
+						"byattr",
+						""
+					],
+					"query": [
+						{
+							"key": "attr",
+							"value": "companyName"
+						},
+						{
+							"key": "value",
+							"value": "hola"
+						}
+					]
+				}
 			},
 			"response": []
 		}
