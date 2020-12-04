@@ -52,7 +52,6 @@ exports.findAll = (req, res, next) => {
 // Get boiler by id
 exports.findOne = (req, res, next) => {
     if(Object.keys(req.query).includes('_id')){
-        console.log(req.query);
         boilers.findOne(req.query)
         .then((data) => {
             if(!data){
@@ -123,7 +122,6 @@ exports.update = (req, res) => {
 // Delete a boiler
 exports.delete = (req, res) => {
     const id = req.query.id;
-    console.log(id);
     boilers.findOneAndRemove({_id: id}, { useFindAndModify: false })
         .then(data =>
             res.send({ message: 'boilers was removed successfully.'})
