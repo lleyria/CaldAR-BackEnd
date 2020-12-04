@@ -1,10 +1,214 @@
 {
-  "info": {
-    "_postman_id": "72ff45cc-6317-41cf-8977-180378277a08",
-    "name": "CaldAR",
-    "description": "This is the CaldAR REST API documentation. Here there are all the necessary requests to interactwith the API.",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [],
-  "protocolProfileBehavior": {}
+	"info": {
+		"_postman_id": "142b9419-bcb8-4068-8f93-b83a16152735",
+		"name": "CaldAR",
+		"description": "All the necessary requests to interact with the boilers",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Boilers - Get All",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"description\": \"C\",\r\n  \"type\": \"gasoil\",\r\n  \"maxCapacity\": 7502.65,\r\n  \"temperatureRange\": \"30/150\",\r\n  \"weight\": 190.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/boilers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilers"
+					],
+					"query": [
+						{
+							"key": "attribute",
+							"value": "maintaince_rate",
+							"disabled": true
+						},
+						{
+							"key": "value",
+							"value": "monthly",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Returns all boilers in the collection"
+			},
+			"response": []
+		},
+		{
+			"name": "Boilers - Get by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/boilers/?_id=5fc68c3813d67d0dd8d329a9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilers",
+						""
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "5fc68c3813d67d0dd8d329a9"
+						}
+					]
+				},
+				"description": "Returns the boiler indicated by its id"
+			},
+			"response": []
+		},
+		{
+			"name": "Boilers - Get by Attribute",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/boilers/?attribute=lot&value=A123-8888",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilers",
+						""
+					],
+					"query": [
+						{
+							"key": "attribute",
+							"value": "lot"
+						},
+						{
+							"key": "value",
+							"value": "A123-8888"
+						}
+					]
+				},
+				"description": "Returns a boiler according to the indicated values"
+			},
+			"response": []
+		},
+		{
+			"name": "Boilers - Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"lot\": \"C111-2323\",\r\n  \"boilersTypeId\": \"C\",\r\n  \"fabricationDate\": \"12/3/2019\",\r\n  \"expirationDate\": \"7/4/2022\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/boilers/?_id=5fc68c3813d67d0dd8d329a9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilers",
+						""
+					],
+					"query": [
+						{
+							"key": "_id",
+							"value": "5fc68c3813d67d0dd8d329a9"
+						}
+					]
+				},
+				"description": "Update the boiler select by its id"
+			},
+			"response": []
+		},
+		{
+			"name": "Boilers - Create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"lot\": \"F111-2323\",\r\n  \"boilersTypeId\": \"F\",\r\n  \"fabricationDate\": \"12/3/2019\",\r\n  \"expirationDate\": \"7/4/2020\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/boilers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilers"
+					]
+				},
+				"description": "Register a new boiler"
+			},
+			"response": []
+		},
+		{
+			"name": "Boilers - Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"lot\": \"M218-2255\",\r\n  \"boilersTypeId\": \"M\",\r\n  \"fabricationDate\": \"12/3/2019\",\r\n  \"expirationDate\": \"7/4/2020\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/boilers/?id=5fca473d2cae181f08ec8dee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"boilers",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "5fca473d2cae181f08ec8dee"
+						}
+					]
+				},
+				"description": "Delete the boiler indicated by its id"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
 }

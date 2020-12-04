@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "ba919caf-3bb3-4543-bbd8-bcd6da6afcbc",
+		"name": "CaldAR Buildings",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Buildings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/buildings/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"buildings",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Building",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"boilersId\": [\r\n        \"vaasv234\", \"vaasv12234\"\r\n    ],\r\n    \"_id\": \"5fc59918932a1e48888a96cc\",\r\n    \"id\": 3,\r\n    \"buildingName\": \"Meridiano\",\r\n    \"companyBuilding\": false,\r\n    \"companyName\": \"\",\r\n    \"address\": \"Entre Rios 1245\",\r\n    \"managerName\": \"Cirilo Escobar\",\r\n    \"phone\": 342347892,\r\n    \"boilerTypes\": \"B - D\",\r\n    \"boilerAmount\": 2\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/buildings",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"buildings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Building by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/buildings/byid/?id=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"buildings",
+						"byid",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update New Building",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"boilersId\": [\"1243\", \"1253\"],\r\n    \"id\": 3,\r\n    \"buildingName\": \"Meridiano\",\r\n    \"companyBuilding\": \"false\",\r\n    \"companyName\": \"1\",\r\n    \"address\": \"Entre Rios 1275\",\r\n    \"managerName\": \"Cirilo Escobar\",\r\n    \"phone\": \"342347892\",\r\n    \"boilerTypes\": \"B - D\",\r\n    \"boilerAmount\": \"2\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/buildings?id=3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"buildings"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Building",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"boilersId\": [\"1243\", \"1253\"],\r\n    \"id\": 3,\r\n    \"buildingName\": \"Meridiano\",\r\n    \"companyBuilding\": \"false\",\r\n    \"companyName\": \"1\",\r\n    \"address\": \"Entre Rios 1434\",\r\n    \"managerName\": \"Cirilo Escobar\",\r\n    \"phone\": \"342347892\",\r\n    \"boilerTypes\": \"B - D\",\r\n    \"boilerAmount\": \"3\"\r\n }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/buildings?id=4",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"buildings"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Buildings by Attr",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/buildings/byattr/?attr=companyName&value=hola",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"buildings",
+						"byattr",
+						""
+					],
+					"query": [
+						{
+							"key": "attr",
+							"value": "companyName"
+						},
+						{
+							"key": "value",
+							"value": "hola"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
