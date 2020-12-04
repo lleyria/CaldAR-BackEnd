@@ -3,9 +3,11 @@ const db = require("../models");
 const companies = require("../models/companies");
 const Companies = db.companies;
 
-//get and show all companies
-exports.findAll = (req, res) => {
-    Companies.find({})
+//get and show all companies (to show them all the query will be empty)
+
+exports.findAll = (req, res, next) => {
+    if(Object.keys(req.query).length === 0) {
+        Companies.find({})
         .then(data => {             
              res.send(data);            
         })
@@ -15,27 +17,51 @@ exports.findAll = (req, res) => {
                     err.message || "error white trying to retrive companies",
             });
         });
+
+    }else {
+        // to avoid conflict with the other controllers
+        next();
+    } 
 };
 
+
 //get one company (by id) and show it
-exports.findOne = (req, res) => {
-    Companies.findOne({_id: req.params.id})
+exports.findOne = (req, res, next) => {    
+    if (Object.keys(req.query).includes("_id")) {
+      Companies.findOne(req.query.id)
         .then(data => {
-            if (!data) {
-                return res.status(404).send({
-                    message: `The company with the id of ${req.params.id} does not exist`
-                    
-                })               
-            }
-            res.send(data)            
+          res.send(data);
         })
         .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "error while trying to retrive this company"                
-            });
+          res.status(500).send({
+            message:  `The company with the id of ${req.query.id} does not exist`,
+          });
         });
-};
+    } else {
+      next();
+    }
+  };
+
+
+
+// exports.findOne = (req, res) => {
+//     Companies.findOne({_id: req.params.id})
+//         .then(data => {
+//             if (!data) {
+//                 return res.status(404).send({
+//                     message: `The company with the id of ${req.params.id} does not exist`
+                    
+//                 })               
+//             }
+//             res.send(data)            
+//         })
+//         .catch(err => {
+//             res.status(500).send({
+//                 message:
+//                     err.message || "error while trying to retrive this company"                
+//             });
+//         });
+// };
 
 // //create a new company and show the new list
 exports.create = (req, res) => {
@@ -136,7 +162,7 @@ exports.update = (req, res) => {
 exports.getByAttribute = (req,res) => {
     // const attribute = req.query.attribute;
     // const value = req.query.value;
-    Company.find({[req.query.attribute]:req.query.value})
+    Companies.find({[req.query.attribute]:req.query.value})
         .then(data => {
             if(!data) {
                 return res.status(404).send ({
