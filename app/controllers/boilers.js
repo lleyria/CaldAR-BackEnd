@@ -33,34 +33,43 @@ exports.create = (req, res) => {
 };
 
 // Get all boilers
-exports.findAll = (req, res) => {
-    boilers.find({})
-    .then((data) => {
-        res.send(data);
-    })
-    .catch((err) => {
-        res.status(500).send({
-            message: err.message || "Some error occured while retrieving boilers.",
-        });
-    });
+exports.findAll = (req, res, next) => {
+    if(Object.keys(req.query).length === 0){
+        boilers.find({})
+            .then((data) => {
+                res.send(data);
+            })
+            .catch((err) => {
+                res.status(500).send({
+                    message: err.message || "Some error occurred while retrieving boilers."
+                });
+            });
+    } else {
+        next();
+    }
 };
 
 // Get boiler by id
-exports.findOne = (req, res) => {
-    boilers.findOne({_id: req.params._id})
-    .then((data) => {
-        if(!data){
-            return res.status(404).send({
-                message: `Boiler with the id ${req.params._id} was not found`
-            })
-        }
-        res.send(data)
-    })
-    .catch((err) => {
-        res.status(404).send({
-            message: err.message || 'Some error occured while retrieving boilers.'
+exports.findOne = (req, res, next) => {
+    if(Object.keys(req.query).includes('_id')){
+        console.log(req.query);
+        boilers.findOne(req.query)
+        .then((data) => {
+            if(!data){
+                return res.status(404).send({
+                    message: `Boiler with the id ${req.query.id} was not found`
+                })
+            }
+            res.send(data)
+        })
+        .catch((err) => {
+            res.status(404).send({
+                message: err.message || 'Some error occured while retrieving boilers.'
+            });
         });
-    });
+    } else {
+        next();
+    }
 };
 
 // Get boiler by attribute
@@ -95,8 +104,8 @@ exports.update = (req, res) => {
         res.status(400).send({ message: 'Content can not be empty'});
         return;
     }
-    const id = req.params._id;
-    boilers.findOneAndUpdate({id}, req.body, { useFindAndModify: false })
+    const id = req.query._id;
+    boilers.findOneAndUpdate({_id: id}, req.body, { useFindAndModify: false })
     .then(data => {
         if(!data) {
             res.status(404).send({
@@ -113,11 +122,10 @@ exports.update = (req, res) => {
 
 // Delete a boiler
 exports.delete = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     console.log(id);
-    boilers.findOneAndRemove({_id:id}, { useFindAndModify: false })
+    boilers.findOneAndRemove({_id: id}, { useFindAndModify: false })
         .then(data =>
-            console.log(data),
             res.send({ message: 'boilers was removed successfully.'})
         )
         .catch(err => {
