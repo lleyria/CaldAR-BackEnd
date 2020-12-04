@@ -2,9 +2,7 @@ const { restart } = require("nodemon");
 const db = require("../models");
 const companies = require("../models/companies");
 const Companies = db.companies;
-
 //get and show all companies (to show them all the query will be empty)
-
 exports.findAll = (req, res, next) => {
     if(Object.keys(req.query).length === 0) {
         Companies.find({})
@@ -23,8 +21,6 @@ exports.findAll = (req, res, next) => {
         next();
     } 
 };
-
-
 //get one company (by id) and show it
 exports.findOne = (req, res, next) => {    
     if (Object.keys(req.query).includes("_id")) {
@@ -44,26 +40,8 @@ exports.findOne = (req, res, next) => {
 
 
 
-// exports.findOne = (req, res) => {
-//     Companies.findOne({_id: req.params.id})
-//         .then(data => {
-//             if (!data) {
-//                 return res.status(404).send({
-//                     message: `The company with the id of ${req.params.id} does not exist`
-                    
-//                 })               
-//             }
-//             res.send(data)            
-//         })
-//         .catch(err => {
-//             res.status(500).send({
-//                 message:
-//                     err.message || "error while trying to retrive this company"                
-//             });
-//         });
-// };
 
-// //create a new company and show the new list
+//create a new company and show the new list
 exports.create = (req, res) => {
     //make sure the request is valid
     if (
@@ -105,7 +83,7 @@ exports.create = (req, res) => {
 };
 //get one of the companies by its ID then delete it.
 exports.deleteOne = (req,res) => {    
-    Companies.deleteOne({_id: req.params.id}, { useFindAndModify: false })
+    Companies.deleteOne({_id: req.query.id}, { useFindAndModify: false })
         .then( data =>
             res.send({ message: "The company selected was deleted" })
         )
@@ -116,7 +94,8 @@ exports.deleteOne = (req,res) => {
             });
         });
 };
- //Get one of the companies by its id, updated it and save it on the DB.
+ //Get one of the companies by its id, updated it and save it on the DB. No need for next()
+ // because there is only one POST metod
 exports.update = (req, res) => {
     //validates that you did not send an emtpy json
     if(!req.body) {
@@ -138,8 +117,8 @@ exports.update = (req, res) => {
         res.status(400).send({ message: "Content cannot be empty!" });
         return;
     }
-    //after both filters we do the update itself
-    Companies.update({_id: req.params.id}, req.body)
+    //after both filters we do the update itself, create and save the new company
+    Companies.update({_id: req.query.id}, req.body)
         .then(data => {
             if(!data) {
                 res.status(404).send({
