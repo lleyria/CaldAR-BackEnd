@@ -4,19 +4,19 @@ var router = require('express').Router();
 // Retrieve all types
 router.get('/', boilersType.findAll);
 
+// Retrieve a single type with id
+router.get('/', boilersType.findOne);
+
 // Create a new type
 router.post('/', boilersType.create);
 
 // Retrieve types by attribute
-router.get('/atr', boilersType.filter);
-
-// Retrieve a single type with id
-router.get('/:_id', boilersType.findOne);
+router.get('/', boilersType.filter);
 
 // Update a type with id
-router.put('/:id', boilersType.update);
+router.put('/', boilersType.update);
 
 // Delete a type with id
-router.delete('/:id', boilersType.delete);
+router.delete('/', boilersType.delete);
 
 module.exports = router;

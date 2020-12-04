@@ -36,34 +36,42 @@ exports.create = (req, res) => {
 };
 
 // Get all types
-exports.findAll = (req, res) => {
-    boilersType.find({})
-        .then((data) => {
-            res.send(data)
-        })
-        .catch((err) => {
-            res.status(500).send({
-                message: err.message || 'Some error occurred while retrieving types.',
+exports.findAll = (req, res, next) => {
+    if(Object.keys(req.query).length === 0) {
+        boilersType.find({})
+            .then((data) => {
+                res.send(data)
+            })
+            .catch((err) => {
+                res.status(500).send({
+                    message: err.message || 'Some error occurred while retrieving types.',
+                });
             });
-        });
+    } else {
+        next();
+    }
 };
 
 // Get type by id
-exports.findOne = (req, res) => {
-    boilersType.findOne({_id: req.params._id})
-    .then((data) => {
-        if(!data){
-            return res.status(404).send({
-                message: `Boiler type with the id ${req.params._id} was not found.`
-            })
-        }
-        res.send(data)
-    })
-    .catch((err) => {
-        res.status(404).send({
-            message: err.message || 'Some error occured while retrieving types.'
+exports.findOne = (req, res, next) => {
+    if(Object.keys(req.query).includes('_id')){
+        boilersType.findOne(req.query)
+        .then((data) => {
+            if(!data){
+                return res.status(404).send({
+                    message: `Boiler type with the id ${req.query} was not found.`
+                })
+            }
+            res.send(data)
+        })
+        .catch((err) => {
+            res.status(404).send({
+                message: err.message || 'Some error occured while retrieving types.'
+            });
         });
-    });
+    } else {
+        next();
+    }
 };
 
 // Get type by attribute
@@ -99,8 +107,8 @@ exports.update = (req, res) => {
             res.status(400).send({ message: 'Content can not be empty'});
             return;
         }
-    const id = req.params._id;
-    boilersType.findOneAndUpdate({id}, req.body, { useFindAndModify: false })
+    const id = req.query._id;
+    boilersType.findOneAndUpdate({_id: id}, req.body, { useFindAndModify: false })
     .then(data => {
         if(!data) {
             res.status(404).send({
@@ -117,10 +125,9 @@ exports.update = (req, res) => {
 
 // Delete a type
 exports.delete = (req, res) => {
-    const id = req.params.id;
-    boilersType.findOneAndRemove({_id:id}, { useFindAndModify: false })
+    const id = req.query.id;
+    boilersType.findOneAndRemove({_id: id}, { useFindAndModify: false })
         .then(data =>
-            console.log(data),
             res.send({ message: 'boiler type was removed successfully.'})
         )
         .catch(err => {
