@@ -28,6 +28,11 @@ module.exports = (mongoose) => {
         type: Number,
         required: true,
       },
+      status: {
+        type: String,
+        required: true,
+        enum: ['active', 'cancelled', 'completed'],
+      },
     })
   );
   return Appointments;
