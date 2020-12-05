@@ -74,6 +74,7 @@ exports.create = (req, res) => {
     startTimeStamp: req.body.startTimeStamp,
     endTimeStamp: req.body.endTimeStamp,
     monthlyHours: req.body.monthlyHours,
+    status: req.body.status
   });
 
   // Save appointment in the database
@@ -129,7 +130,7 @@ exports.update = (req, res) => {
 
 // Delete an appointment with a specified id.
 exports.delete = (req, res) => {
-  Appointments.findOneAndRemove({ _id: req.query.id }, { useFindAndModify: false })
+  Appointments.findOneAndUpdate({ _id: req.query.id }, {status: 'cancelled'}, { useFindAndModify: false })
     .then((data) => {
       res.send(`Appointment with the id ${req.query.id} was successfully removed.`);
     })
