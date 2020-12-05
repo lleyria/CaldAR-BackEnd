@@ -4,15 +4,15 @@ const Appointments = db.appointments;
 // Retrieve all appointments from the database.
 exports.findAll = (req, res, next) => {
   if (Object.keys(req.query).length === 0) {
-    Appointments.find({})
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message: err.message || "Some error occurred while retrieving appointments.",
+      Appointments.find({})
+        .then((data) => {
+          res.send(data);
+        })
+        .catch((err) => {
+          res.status(500).send({
+            message: err.message || "Some error occurred while retrieving appointments.",
+          });
         });
-      });
   } else {
     next();
   }
@@ -60,7 +60,8 @@ exports.create = (req, res) => {
     !req.body.technician ||
     !req.body.startTimeStamp ||
     !req.body.endTimeStamp ||
-    !req.body.monthlyHours
+    !req.body.monthlyHours ||
+    !req.body.status
   ) {
     res.status(400).send({ message: "Content cannot be empty!" });
     return;
@@ -105,7 +106,8 @@ exports.update = (req, res) => {
     !req.body.technician ||
     !req.body.startTimeStamp ||
     !req.body.endTimeStamp ||
-    !req.body.monthlyHours
+    !req.body.monthlyHours ||
+    !req.body.status
   ) {
     res.status(400).send({ message: "Content cannot be empty!" });
     return;
