@@ -1,6 +1,4 @@
-const { restart } = require("nodemon");
 const db = require("../models");
-const companies = require("../models/companies");
 const Companies = db.companies;
 //get and show all companies (to show them all the query will be empty)
 exports.findAll = (req, res, next) => {
