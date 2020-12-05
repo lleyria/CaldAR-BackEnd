@@ -1,0 +1,213 @@
+{
+	"id": "96ae45ce-43ae-09a4-0ea5-bd7e3d5bc211",
+	"name": "boilers",
+	"description": "",
+	"order": [
+		"4193b967-e318-e132-842f-dcaf4a7d2ed4",
+		"5a4b9848-76ea-0500-3d1d-86957ee8c002",
+		"15543f86-5902-35d1-0d78-f78cc054d1b7",
+		"ae0f5500-d75b-fd91-f4a0-a65b65895a2a",
+		"99e6370b-116d-05ea-3760-73b200e41554",
+		"d0d11d69-0c4b-3dde-8cc7-08d28937a8a2"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1607192752750,
+	"owner": "13569347",
+	"public": false,
+	"requests": [
+		{
+			"id": "15543f86-5902-35d1-0d78-f78cc054d1b7",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:5000/boilers/?_id=5fc6837e3cb6980094427789",
+			"queryParams": [
+				{
+					"key": "_id",
+					"value": "5fc6837e3cb6980094427789",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1607193728159,
+			"name": "Boilers - Get by Id",
+			"description": "",
+			"collectionId": "96ae45ce-43ae-09a4-0ea5-bd7e3d5bc211",
+			"responses": []
+		},
+		{
+			"id": "4193b967-e318-e132-842f-dcaf4a7d2ed4",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:5000/boilers",
+			"queryParams": [
+				{
+					"key": "id",
+					"value": "",
+					"equals": false,
+					"description": "",
+					"enabled": false
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "POST",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1607196815443,
+			"name": "boilers-create",
+			"description": "",
+			"collectionId": "96ae45ce-43ae-09a4-0ea5-bd7e3d5bc211",
+			"responses": [],
+			"rawModeData": "{\t\r\n    \r\n    \"lot\": \"C102-2080\",\r\n    \"boilersTypeId\": \"C\",\r\n    \"fabricationDate\": \"12/3/2019\",\r\n    \"expirationDate\": \"5/12/2020\"\r\n}\r\n"
+		},
+		{
+			"id": "5a4b9848-76ea-0500-3d1d-86957ee8c002",
+			"name": "Boilers - Get All",
+			"description": "",
+			"collectionId": "96ae45ce-43ae-09a4-0ea5-bd7e3d5bc211",
+			"method": "GET",
+			"headers": "",
+			"data": [],
+			"rawModeData": "",
+			"url": "http://localhost:5000/boilersType",
+			"responses": [],
+			"pathVariableData": [],
+			"queryParams": [],
+			"headerData": [],
+			"collection_id": "96ae45ce-43ae-09a4-0ea5-bd7e3d5bc211"
+		},
+		{
+			"id": "99e6370b-116d-05ea-3760-73b200e41554",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:5000/boilers/?_id=5fcbe0e6384f2f4b784ae265",
+			"queryParams": [
+				{
+					"key": "_id",
+					"value": "5fcbe0e6384f2f4b784ae265",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "PUT",
+			"data": [],
+			"dataMode": "raw",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1607196966579,
+			"name": "Boilers - Update",
+			"description": "",
+			"collectionId": "96ae45ce-43ae-09a4-0ea5-bd7e3d5bc211",
+			"responses": [],
+			"rawModeData": "{\n    \n    \"lot\": \"C102-2000\",\n    \"boilersTypeId\": \"C\",\n    \"fabricationDate\": \"2019-12-03T03:00:00.000Z\",\n    \"expirationDate\": \"2020-05-12T03:00:00.000Z\",\n    \"__v\": 0\n}"
+		},
+		{
+			"id": "ae0f5500-d75b-fd91-f4a0-a65b65895a2a",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:5000/boilers/?attribute=lot&value=C111-2323",
+			"queryParams": [
+				{
+					"key": "attribute",
+					"value": "lot",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				},
+				{
+					"key": "value",
+					"value": "C111-2323",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "GET",
+			"data": [],
+			"dataMode": "params",
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1607193744243,
+			"name": "Boilers- Get by Attribute",
+			"description": "",
+			"collectionId": "96ae45ce-43ae-09a4-0ea5-bd7e3d5bc211",
+			"responses": []
+		},
+		{
+			"id": "d0d11d69-0c4b-3dde-8cc7-08d28937a8a2",
+			"headers": "",
+			"headerData": [],
+			"url": "http://localhost:5000/boilers?id=5fcbe0e6384f2f4b784ae265",
+			"queryParams": [
+				{
+					"key": "id",
+					"value": "5fcbe0e6384f2f4b784ae265",
+					"equals": true,
+					"description": "",
+					"enabled": true
+				}
+			],
+			"preRequestScript": null,
+			"pathVariables": {},
+			"pathVariableData": [],
+			"method": "DELETE",
+			"data": [
+				{
+					"key": "id",
+					"value": "5fcbe0e6384f2f4b784ae265",
+					"description": "",
+					"type": "text",
+					"enabled": true
+				}
+			],
+			"dataMode": "params",
+			"version": 2,
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"time": 1607197144565,
+			"name": "boilers delete by id",
+			"description": "delete by id, the validation for the id works.",
+			"collectionId": "96ae45ce-43ae-09a4-0ea5-bd7e3d5bc211",
+			"responses": []
+		}
+	]
+}

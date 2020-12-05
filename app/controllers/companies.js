@@ -151,9 +151,7 @@ exports.update = (req, res) => {
 
 
 //get any company by a specific attribute.
-exports.getByAttribute = (req,res) => {
-    // const attribute = req.query.attribute;
-    // const value = req.query.value;
+exports.getByAttribute = (req,res) => {    
     Companies.find({[req.query.attribute]:req.query.value})
         .then(data => {
             if(!data) {

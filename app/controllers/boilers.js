@@ -3,11 +3,14 @@ const boilers = db.boilers;
 
 // Create a new boiler
 exports.create = (req, res) => {
-    // Validation
+    // Validation, already checks for null 
     if(!req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate){
         res.status(400).send({ message: 'Content can not be empty'});
         return;
     }
+    
+
+
 
     // Create a boiler
     const boiler = new boilers({
@@ -120,8 +123,16 @@ exports.update = (req, res) => {
 };
 
 // Delete a boiler
+//validate that is not assigned to a boilertype or a company
+
+
 exports.delete = (req, res) => {
     const id = req.query.id;
+    //validates that we are using a valid id (works)
+    if (!id) {
+        res.status(400).send({ message: 'you have to assign and ID to delete'});
+        return;
+    }
     boilers.findOneAndRemove({_id: id}, { useFindAndModify: false })
         .then(data =>
             res.send({ message: 'boilers was removed successfully.'})
