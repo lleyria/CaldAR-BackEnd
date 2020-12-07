@@ -1,5 +1,8 @@
 const db = require("../models");
 const Appointments = db.appointments;
+const date = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+const hour =  /^\d{1,2}:\d{2}([ap]m)?$/;
+const cantDays = [31,28,31,30,31,30,31,31,30,31,30,31]
 
 // Retrieve all appointments from the database.
 exports.findAll = (req, res, next) => {
@@ -67,6 +70,58 @@ exports.create = (req, res) => {
     return;
   }
 
+  //Validate content
+  const building = req.body.building;
+  if(building.indexOf(' ') != -1){
+    res.status(400).send({ message: "idBuilding cannot content spaces" });
+    return;
+  }
+  const boiler = req.body.boiler;
+  if(boiler.indexOf(' ') != -1){
+    res.status(400).send({ message: "idBoiler cannot content spaces" });
+    return;
+  }
+  const tech = req.body.technician;
+  if(tech.indexOf(' ') != -1){
+    res.status(400).send({ message: "idTechnician cannot content spaces" });
+    return;
+  }
+  const mHours = req.body.monthlyHours;
+  if(mHours < 0 || mHours > 160){
+    res.status(400).send ({ message: "The minimum number of hours is 0, and the maximum 160" });
+    return;
+  }
+  const start = req.body.startTimeStamp;
+  const spaceStart = start.indexOf(' ');
+  const onlyDateStart = start.substring(0, spaceStart);
+  if(!date.test(onlyDateStart)){
+    res.status(400).send({ message: "Bad date format, it is recommended MM/DD/YYYY"});
+  }
+  const onlyTimeStart = start.substring(spaceStart + 1);
+  if(!hour.test(onlyTimeStart)){
+    res.status(400).send({ message: "Bad time format, it is recommended HH:MM"});
+  }
+  const end = req.body.endTimeStamp;
+  const spaceEnd = end.indexOf(' ');
+  const onlyDateEnd = end.substring(0, spaceEnd);
+  if(!date.test(onlyDateEnd)){
+    res.status(400).send({ message: "Bad date format, it is recommended MM/DD/YYYY"});
+  }
+  const onlyTimeEnd = end.substring(spaceEnd + 1);
+  if(!hour.test(onlyTimeEnd)){
+    res.status(400).send({ message: "Bad time format, it is recommended HH:MM"});
+  }
+  // endDate greater than startDate
+  if(onlyDateEnd < onlyDateStart){
+    res.status(400).send({ message: "The end date cannot be earlier than the start date"});
+  }
+  if(onlyDateEnd === onlyDateStart){
+    if(onlyTimeEnd <= onlyTimeStart){
+      res.status(400).send({ message: "The end time cannot be earlier than the start time"});
+    }
+  }
+
+
   // Create new appointment
   const appointment = new Appointments({
     building: req.body.building,
@@ -111,6 +166,56 @@ exports.update = (req, res) => {
   ) {
     res.status(400).send({ message: "Content cannot be empty!" });
     return;
+  }
+
+  const building = req.body.building;
+  if(building.indexOf(' ') != -1){
+    res.status(400).send({ message: "idBuilding cannot content spaces" });
+    return;
+  }
+  const boiler = req.body.boiler;
+  if(boiler.indexOf(' ') != -1){
+    res.status(400).send({ message: "idBoiler cannot content spaces" });
+    return;
+  }
+  const tech = req.body.technician;
+  if(tech.indexOf(' ') != -1){
+    res.status(400).send({ message: "idTechnician cannot content spaces" });
+    return;
+  }
+  const mHours = req.body.monthlyHours;
+  if(mHours < 0 || mHours > 160){
+    res.status(400).send ({ message: "The minimum number of hours is 0, and the maximum 160" });
+    return;
+  }
+  const start = req.body.startTimeStamp;
+  const spaceStart = start.indexOf(' ');
+  const onlyDateStart = start.substring(0, spaceStart);
+  if(!date.test(onlyDateStart)){
+    res.status(400).send({ message: "Bad date format, it is recommended MM/DD/YYYY"});
+  }
+  const onlyTimeStart = start.substring(spaceStart + 1);
+  if(!hour.test(onlyTimeStart)){
+    res.status(400).send({ message: "Bad time format, it is recommended HH:MM"});
+  }
+  const end = req.body.endTimeStamp;
+  const spaceEnd = end.indexOf(' ');
+  const onlyDateEnd = end.substring(0, spaceEnd);
+  if(!date.test(onlyDateEnd)){
+    res.status(400).send({ message: "Bad date format, it is recommended MM/DD/YYYY"});
+  }
+  const onlyTimeEnd = end.substring(spaceEnd + 1);
+  if(!hour.test(onlyTimeEnd)){
+    res.status(400).send({ message: "Bad time format, it is recommended HH:MM"});
+  }
+  // endDate greater than startDate
+  if(onlyDateEnd < onlyDateStart){
+    res.status(400).send({ message: "The end date cannot be earlier than the start date"});
+  }
+  if(onlyDateEnd === onlyDateStart){
+    if(onlyTimeEnd <= onlyTimeStart){
+      res.status(400).send({ message: "The end time cannot be earlier than the start time"});
+    }
   }
 
   Appointments.findOneAndUpdate({ _id: req.query.id }, req.body, { useFindAndModify: false })
