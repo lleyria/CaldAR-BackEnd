@@ -1,19 +1,30 @@
 const db = require('../models');
 const boilersType = db.boilersType;
+// add boilers and technitians
+const Technicians = db.technicians;
+const boilers = db.boilers;
 
 // Create a new type of boiler
 exports.create = (req, res) => {
     //Validation - Malfunction
+    const re = /^\d{1,2}\/\d{2,3}$/;
+    //validate first for empty values in the doc
     if(!req.body.description || !req.body.type || !req.body.maxCapacity ||
-        !req.body.temperatureRange || !req.body.weight){
-            console.log(req.body.description);
-            console.log(req.body.type);
-            console.log(req.body.maxCapacity);
-            console.log(req.body.temperatureRange);
-            console.log(req.body.weight);
+        !req.body.temperatureRange || !req.body.weight){            
             res.status(400).send({ message: 'Content can not be empty'});
             return;
     }
+    //check for negative values
+    if( req.body.weight <= 0 || req.body.maxCapacity <= 0) {
+            
+        res.status(400).send({ message: 'values must be real'});
+        return;
+    }
+    //finally check for format
+    if (!re.test(req.body.temperatureRange)) {               
+        res.status(400).send({ message: 'format for temp range is not correct'});
+        return;
+    }           
     // Create a new type
     const newType = new boilersType({
         description: req.body.description,
