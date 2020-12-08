@@ -3,7 +3,7 @@ const { mongoose } = require(".");
 module.exports = (mongoose) => {
     const boilersType = mongoose.model(
         'boilersType',
-        mongoose.Schema({            
+        mongoose.Schema({
             description: {
                 type: String,
                 required: true,

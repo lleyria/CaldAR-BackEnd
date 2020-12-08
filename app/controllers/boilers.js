@@ -13,22 +13,24 @@ exports.create = (req, res) => {
     const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
     if (!req.body.instalationDate) {
         if(
-            !req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||         
+            !req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||
             !re.test(req.body.fabricationDate) || !re.test(req.body.expirationDate)
         ) {
             res.status(400).send({ message: 'Content can not be empty and dates must have the correct format'});
             return;
         }
     } else  {
-        if(!req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||         
+        if(!req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||
        !re.test(req.body.fabricationDate) || !re.test(req.body.instalationDate) ||!re.test(req.body.expirationDate)
         ) {
             res.status(400).send({ message: 'Content can not be empty and dates must have the correct format'});
             return;
         }
-    }      
+    }
     // Create a boiler
     const boiler = new boilers({
+        //added id to test delete
+        // _id:req.body._id,
         lot: req.body.lot,
         companyId: req.body.companyId,
         boilersTypeId: req.body.boilersTypeId,
@@ -36,7 +38,7 @@ exports.create = (req, res) => {
         fabricationDate: req.body.fabricationDate,
         expirationDate: req.body.expirationDate,
     });
-    // Save new boiler    
+    // Save new boiler
     boiler
         .save(boiler)
         .then(data => {
@@ -107,30 +109,24 @@ exports.filter = (req, res) => {
 };
 // Update a boiler
 exports.update = (req, res) => {
-    if(!req.body){
-        //validates that the request isn't empty, already done.
-        return res.status(400).send ({
-            message: 'Data to update can not be empty!'
-        });
-    }
     // Validation no empty field in the required params and correct date format.
     const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
     if (!req.body.instalationDate) {
         if(
-            !req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||         
+            !req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||
             !re.test(req.body.fabricationDate) || !re.test(req.body.expirationDate)
         ) {
-            res.status(400).send({ message: 'Content can not be empty and dates must have the correct format'});
+            res.status(400).send({ message: 'Data to update can not be empty!'});
             return;
         }
     } else  {
-        if(!req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||         
+        if(!req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||
        !re.test(req.body.fabricationDate) || !re.test(req.body.instalationDate) ||!re.test(req.body.expirationDate)
         ) {
             res.status(400).send({ message: 'Content can not be empty and dates must have the correct format'});
             return;
         }
-    }   
+    }
     const id = req.query._id;
     //validates we are updating an existing boiler in the db, already done.
     boilers.findOneAndUpdate({_id: id}, req.body, { useFindAndModify: false })
@@ -160,9 +156,9 @@ exports.delete = (req, res) => {
                         return res.status(404).send({
                             message: "boiler was not found",
                         });
-                    }                              
+                    }
                     res.send({ message: 'boiler was removed successfully.'});
-                    // res.send(data)                
+                    // res.send(data)
                 })
                 .catch(err => {
                     res.status(500).send({
@@ -184,7 +180,7 @@ exports.delete = (req, res) => {
 
             }
         });
-            
+
     } else {
         res.status(404).send({
             message: "make sure you use a valid id",

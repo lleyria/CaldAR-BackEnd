@@ -1,4 +1,3 @@
-const { restart } = require("nodemon");
 const db = require("../models");
 const companies = require("../models/companies");
 const Companies = db.companies;
@@ -43,9 +42,6 @@ exports.findOne = (req, res, next) => {
       next();
     }
   };
-
-
-
 
 //create a new company and show the new list
 exports.create = (req, res) => {
