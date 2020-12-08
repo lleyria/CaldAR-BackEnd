@@ -6,7 +6,7 @@ module.exports = (mongoose) => {
     mongoose.Schema(
       {
         buildingName: String,
-        companyBuilding: Boolean,
+        companyBuilding: String,
         companyName: String,
         address: String,
         managerName: String,
