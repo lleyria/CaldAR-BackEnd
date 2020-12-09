@@ -50,8 +50,7 @@ exports.findOne = (req, res, next) => {
 //create a new company and show the new list
 exports.create = (req, res) => {
     //make sure the request is valid
-    if (
-        !req.body._id || 
+    if ( 
         !req.body.name ||
         !req.body.email ||
         !req.body.contact ||
@@ -65,7 +64,6 @@ exports.create = (req, res) => {
 
     //create the company as a new object
     const companies = new Companies ({
-        _id: req.body._id,
         name: req.body.name,
         email: req.body.email,
         contact: req.body.contact,
@@ -121,8 +119,7 @@ exports.update = (req, res) => {
     }
 
     //validate request
-    if (
-        !req.body._id || 
+    if ( 
         !req.body.name ||
         !req.body.email ||
         !req.body.contact ||
