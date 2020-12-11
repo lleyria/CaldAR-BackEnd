@@ -1,6 +1,6 @@
 const db = require("../models");
 const Technicians = db.technicians;
-const Appointment = db.appointments;
+const Appointments = db.appointments;
 
 // Retrieve all technicians from the database.
 exports.findAll = (req, res, next) => {
@@ -104,27 +104,30 @@ exports.create = (req, res) => {
 
 // Delete a technician with a specified id.
 exports.delete = (req, res) => {
-  Technicians.findOneAndRemove({ _id: req.query.id }, { useFindAndModify: false })
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot delete technician with id=${id}.`
+  Appointments.findOne({technician: req.query.id}).then((data) =>{
+    if (data===null){
+      Technicians.findOneAndRemove({ _id: req.query.id }, { useFindAndModify: false })
+      .then((data) => {
+        if (!data) {
+          res.status(404).send({
+            message: `Cannot delete technician with id=${id}.`
+          });
+        } 
+        res.send(`Technician with the id ${req.query.id} was successfully removed.`);
+        res.send(data)
+      })
+      .catch((err) => {
+        res.status(500).send({
+          message: `Error removed technician with id ${req.query.id}`,
         });
-    } else if(Appointment.findOne({technician:data.firstName})){
+      });
+    } else {
       res.status(403).send({
         message: `Cannot delete technician with an appointment scheduled.`
     });
-
-    }
-    res.send(`Technician with the id ${req.query.id} was successfully removed.`);
-    res.send(data); 
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: `Error removed technician with id ${req.query.id}`,
-      });
-    });
-};
+    } 
+  });
+}
 
 // Update a technician with a specified id.
 exports.update = (req, res) => {
