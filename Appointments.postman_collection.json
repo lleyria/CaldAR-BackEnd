@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "de1bd39c-428d-42ad-94fc-9f502ba94be4",
+		"_postman_id": "d4f21e78-81cb-4987-bf75-402e53311d45",
 		"name": "Appointments",
 		"description": "This is the appointments collection REST API documentation. Here are all the necessary requests to interact with the API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -68,7 +68,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/appointments?attribute=building&value=5fc6926cfc13ae3a82000000",
+					"raw": "http://localhost:5000/appointments?attribute=status&value=cancelled",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -80,11 +80,11 @@
 					"query": [
 						{
 							"key": "attribute",
-							"value": "building"
+							"value": "status"
 						},
 						{
 							"key": "value",
-							"value": "5fc6926cfc13ae3a82000000"
+							"value": "cancelled"
 						}
 					]
 				}
@@ -98,7 +98,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"building\": \"5fc6926cfc13ae3a82000006\",\r\n        \"boiler\": \"5fc6926cfc13ae3a82000007\",\r\n        \"technician\": \"5fc6926cfc13ae3a82000008\",\r\n        \"startTimeStamp\": \"1587160947000\",\r\n        \"endTimeStamp\": \"1584006724000\",\r\n        \"monthlyHours\": 34\r\n    }",
+					"raw": "{\r\n        \"building\": \"5fc6926cfc13ae3a82000006\",\r\n        \"boiler\": \"5fc6926cfc13ae3a82000007\",\r\n        \"technician\": \"5fc6926cfc13ae3a82000008\",\r\n        \"startTimeStamp\": \"1587160947000\",\r\n        \"endTimeStamp\": \"1584006724000\",\r\n        \"monthlyHours\": 34,\r\n        \"status\": \"completed\"\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -126,7 +126,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"building\": \"5fc6926cfc13ae3a82000003\",\r\n        \"boiler\":  \"5fc6926cfc13ae3a82000004\",\r\n        \"technician\": \"5fc6926cfc13ae3a82000005\",\r\n        \"startTimeStamp\": \"1596630879000\",\r\n        \"endTimeStamp\": \"1598865981000\",\r\n        \"monthlyHours\": 50\r\n    }",
+					"raw": "{\r\n        \"building\": \"5fc6926cfc13ae3a82000003\",\r\n        \"boiler\":  \"5fc6926cfc13ae3a82000004\",\r\n        \"technician\": \"5fc6926cfc13ae3a82000005\",\r\n        \"startTimeStamp\": \"1596630879000\",\r\n        \"endTimeStamp\": \"1598865981000\",\r\n        \"monthlyHours\": 50,\r\n        \"status\": \"active\"\r\n    }",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -134,7 +134,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/appointments?id=5fc693e39ef48316306b9450",
+					"raw": "http://localhost:5000/appointments?id=5fc93819f704bf27607e58c5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -146,7 +146,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "5fc693e39ef48316306b9450"
+							"value": "5fc93819f704bf27607e58c5"
 						}
 					]
 				}
@@ -159,7 +159,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:5000/appointments?id=5fc6986d9ef48316306b9451",
+					"raw": "http://localhost:5000/appointments?id=5fcbeb0f9986d23774f0b7d6",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -171,7 +171,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "5fc6986d9ef48316306b9451"
+							"value": "5fcbeb0f9986d23774f0b7d6"
 						}
 					]
 				}
