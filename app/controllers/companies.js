@@ -2,6 +2,7 @@ const { restart } = require("nodemon");
 const db = require("../models");
 const companies = require("../models/companies");
 const Companies = db.companies;
+const buildings = db.buildings;
 //get and show all companies (to show them all the query will be empty)
 exports.findAll = (req, res, next) => {
     if(Object.keys(req.query).length === 0) {
@@ -26,11 +27,16 @@ exports.findOne = (req, res, next) => {
     if (Object.keys(req.query).includes("_id")) {
       Companies.findOne(req.query.id)
         .then(data => {
-          res.send(data);
+            if (!data) {
+                return res.status(404).send({
+                    message: `Company with id ${req.query.id} was not found.`
+                })
+            }
+            res.send(data);
         })
         .catch(err => {
           res.status(500).send({
-            message:  `The company with the id of ${req.query.id} does not exist`,
+            message:  `Some error occurred while retrieving technician with id ${req.query.id}`,
           });
         });
     } else {
@@ -44,8 +50,7 @@ exports.findOne = (req, res, next) => {
 //create a new company and show the new list
 exports.create = (req, res) => {
     //make sure the request is valid
-    if (
-        !req.body._id || 
+    if ( 
         !req.body.name ||
         !req.body.email ||
         !req.body.contact ||
@@ -59,7 +64,6 @@ exports.create = (req, res) => {
 
     //create the company as a new object
     const companies = new Companies ({
-        _id: req.body._id,
         name: req.body.name,
         email: req.body.email,
         contact: req.body.contact,
@@ -84,9 +88,19 @@ exports.create = (req, res) => {
 //get one of the companies by its ID then delete it.
 exports.deleteOne = (req,res) => {    
     Companies.deleteOne({_id: req.query.id}, { useFindAndModify: false })
-        .then( data =>
-            res.send({ message: "The company selected was deleted" })
-        )
+        .then( data =>{
+            if (!data) {
+                res.status(404).send({
+                  message: `Cannot delete company with id=${id}.`
+                });
+            } else if(buildings.findOne({companyName:data.name})){
+              res.status(403).send({
+                message: `Cannot delete company with buildings attached to it.`
+            });
+            }
+            res.send({ message: "The company selected was deleted"});
+            res.send(data); 
+        })
         .catch(err => {
             res.status(500).send({
                 message:
@@ -105,8 +119,7 @@ exports.update = (req, res) => {
     }
 
     //validate request
-    if (
-        !req.body._id || 
+    if ( 
         !req.body.name ||
         !req.body.email ||
         !req.body.contact ||
