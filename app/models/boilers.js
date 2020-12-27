@@ -4,7 +4,7 @@ const { mongoose } = require(".");
 module.exports = (mongoose) => {
     const boilers = mongoose.model(
         'boilers',
-        mongoose.Schema({
+        mongoose.Schema({                      
             lot: {
                 type: String,
                 required: true

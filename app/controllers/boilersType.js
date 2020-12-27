@@ -1,21 +1,34 @@
 const db = require('../models');
 const boilersType = db.boilersType;
+// add boilers and technitians
+const Technicians = db.technicians;
+const boilers = db.boilers;
 
 // Create a new type of boiler
 exports.create = (req, res) => {
     //Validation - Malfunction
+    const re = /^\d{1,2}\/\d{2,3}$/;
+    //validate first for empty values in the doc
     if(!req.body.description || !req.body.type || !req.body.maxCapacity ||
-        !req.body.temperatureRange || !req.body.weight){
-            console.log(req.body.description);
-            console.log(req.body.type);
-            console.log(req.body.maxCapacity);
-            console.log(req.body.temperatureRange);
-            console.log(req.body.weight);
+        !req.body.temperatureRange || !req.body.weight){            
             res.status(400).send({ message: 'Content can not be empty'});
             return;
     }
+    //check for negative values
+    if( req.body.weight <= 0 || req.body.maxCapacity <= 0) {
+            
+        res.status(400).send({ message: 'values must be real'});
+        return;
+    }
+    //finally check for format
+    if (!re.test(req.body.temperatureRange)) {               
+        res.status(400).send({ message: 'format for temp range is not correct'});
+        return;
+    }           
     // Create a new type
     const newType = new boilersType({
+        //added id to test delete
+        // _id:req.body._id,
         description: req.body.description,
         type: req.body.type,
         maxCapacity: req.body.maxCapacity,
@@ -95,18 +108,28 @@ exports.filter = (req, res) => {
 };
 
 // Update a type
-exports.update = (req, res) => {
-    if(!req.body){
-        return res.status(400).send ({
-            message: 'Data to update can not be empty!'
-        });
-    }
+exports.update = (req, res) => {    
+    const re = /^\d{1,2}\/\d{2,3}$/;
     // Validation
-    if(!req.body.description || !req.body.type || !req.body.maxCapacity ||
-        !req.body.temperatureRange || !req.body.weight) {
+    if(
+        !req.body.description || !req.body.type || !req.body.maxCapacity ||
+        !req.body.temperatureRange || !req.body.weight
+        ) {
             res.status(400).send({ message: 'Content can not be empty'});
             return;
         }
+    //check for negative values
+    if( req.body.weight <= 0 || req.body.maxCapacity <= 0) {
+            
+        res.status(400).send({ message: 'values must be real'});
+        return;
+    }
+    //finally check for format
+    if (!re.test(req.body.temperatureRange)) {               
+        res.status(400).send({ message: 'format for temp range is not correct'});
+        return;
+    }       
+
     const id = req.query._id;
     boilersType.findOneAndUpdate({_id: id}, req.body, { useFindAndModify: false })
     .then(data => {
@@ -122,17 +145,48 @@ exports.update = (req, res) => {
         });
     });
 };
-
-// Delete a type
+// delete checks for a match with both technicians and boilers collections
 exports.delete = (req, res) => {
     const id = req.query.id;
-    boilersType.findOneAndRemove({_id: id}, { useFindAndModify: false })
-        .then(data =>
-            res.send({ message: 'boiler type was removed successfully.'})
-        )
-        .catch(err => {
-            res.status(500).send({
-                message: 'Error removing boiler type with id = ' + id
+    if(Object.keys(req.query).includes("id")) {
+        boilers.findOne({ _id: req.query.id }).then((data) => {
+            if(data=== null) {
+                Technicians.findOne({ boilersTypeId: req.query.id }).then((data) => {
+                    if (data === null) {
+                        boilersType.findOneAndRemove({ _id: req.query.id}, { useFindAndModify: false })
+                .then((data) => {
+                    if(!data) {
+                        return res.status(404).send({
+                            message: "boilerType was not found",
+                        });
+                    }                              
+                    res.send({ message: 'boilerType was removed successfully.'});
+                    // res.send(data)                
+                })
+                .catch(err => {
+                    res.status(500).send({
+                        message: "internal error",
+                    });
+                });
+
+                } else {
+                    res.status(403).send({
+                        message: "Cannot delete a boiler assigned to a technician",
+                    });
+
+                }
             });
+            } else {
+                res.status(403).send({
+                    message: "Cannot delete a boilerType  also assigned to the boilers ",
+                });
+
+            }
         });
+            
+    } else {
+        res.status(404).send({
+            message: "make sure you use a valid id",
+        });
+    }
 };
