@@ -1,5 +1,4 @@
 const db = require("../models");
-const companies = require("../models/companies");
 const Companies = db.companies;
 const buildings = db.buildings;
 //get and show all companies (to show them all the query will be empty)
