@@ -17,7 +17,7 @@ module.exports = (mongoose) => {
                 type: String,
                 required: true
             },
-            instalationDate: {
+            installationDate: {
                 type: Date,
                 required: false
             },
