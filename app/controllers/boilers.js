@@ -11,7 +11,7 @@ exports.create = (req, res) => {
     // Validation, already checks for null of the required values on the Schema
     // validation for the correct date format
     const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
-    if (!req.body.instalationDate) {
+    if (!req.body.installationDate) {
         if(
             !req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||
             !re.test(req.body.fabricationDate) || !re.test(req.body.expirationDate)
@@ -21,7 +21,7 @@ exports.create = (req, res) => {
         }
     } else  {
         if(!req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||
-       !re.test(req.body.fabricationDate) || !re.test(req.body.instalationDate) ||!re.test(req.body.expirationDate)
+       !re.test(req.body.fabricationDate) || !re.test(req.body.installationDate) ||!re.test(req.body.expirationDate)
         ) {
             res.status(400).send({ message: 'Content can not be empty and dates must have the correct format'});
             return;
@@ -34,7 +34,7 @@ exports.create = (req, res) => {
         lot: req.body.lot,
         companyId: req.body.companyId,
         boilersTypeId: req.body.boilersTypeId,
-        instalationDate: req.body.instalationDate,
+        installationDate: req.body.installationDate,
         fabricationDate: req.body.fabricationDate,
         expirationDate: req.body.expirationDate,
     });
@@ -111,7 +111,7 @@ exports.filter = (req, res) => {
 exports.update = (req, res) => {
     // Validation no empty field in the required params and correct date format.
     const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
-    if (!req.body.instalationDate) {
+    if (!req.body.installationDate) {
         if(
             !req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||
             !re.test(req.body.fabricationDate) || !re.test(req.body.expirationDate)
@@ -121,7 +121,7 @@ exports.update = (req, res) => {
         }
     } else  {
         if(!req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||
-       !re.test(req.body.fabricationDate) || !re.test(req.body.instalationDate) ||!re.test(req.body.expirationDate)
+       !re.test(req.body.fabricationDate) || !re.test(req.body.installationDate) ||!re.test(req.body.expirationDate)
         ) {
             res.status(400).send({ message: 'Content can not be empty and dates must have the correct format'});
             return;
