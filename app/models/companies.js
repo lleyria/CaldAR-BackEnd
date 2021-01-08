@@ -7,27 +7,28 @@ module.exports = mongoose => {
                     type:String,
                     required: true
                 },
-                email: {
+                companyName: {
                     type: String,
                     required: true
                 },
-                contact: {
-                    type: Number,
+                address: {
+                    type: String,
                     required: true 
                 },
-                buildings: [{
+                managerName: [{
                     type: String,
                     required: true
                 }],
-                boilers: [{
-                    type: String,
-                    required: true
-                }],        
-                maintenanceHours: {
+                phone: [{
                     type: Number,
                     required: true
+                }],        
+                boilerType: {
+                    type: String,
+                    required: true
                 }
-        })
+        }
+        )
     );
     return Companies;
 };

@@ -47,11 +47,11 @@ exports.create = (req, res) => {
     //make sure the request is valid
     if ( 
         !req.body.name ||
-        !req.body.email ||
-        !req.body.contact ||
-        !req.body.buildings ||
-        !req.body.boilers ||
-        !req.body.maintenanceHours
+        !req.body.companyName ||
+        !req.body.address ||
+        !req.body.managerName ||
+        !req.body.phone ||
+        !req.body.boilerType  
       ) {
         res.status(400).send({ message: "Content cannot be empty!" });
         return;
@@ -60,11 +60,11 @@ exports.create = (req, res) => {
     //create the company as a new object
     const companies = new Companies ({
         name: req.body.name,
-        email: req.body.email,
-        contact: req.body.contact,
-        buildings: req.body.buildings,
-        boilers: req.body.boilers,
-        maintenanceHours: req.body.maintenanceHours,
+        companyName: req.body.companyName,
+        address: req.body.address,
+        managerName: req.body.managerName,
+        phone: req.body.phone,
+        boilerType: req.body.boilerType
     });
 
     //save the object "company" in the DB
@@ -81,27 +81,35 @@ exports.create = (req, res) => {
         });
 };
 //get one of the companies by its ID then delete it.
-exports.deleteOne = (req,res) => {    
-    Companies.deleteOne({_id: req.query.id}, { useFindAndModify: false })
-        .then( data =>{
+exports.deleteOne = (req,res) => {   
+    buildings.findOne({companyName:req.query.companyName})
+    .then(data =>{
+        if(!data){
+            Companies.findOneAndRemove({_id: req.query._id}, { useFindAndModify: false })
+            .then( data =>{
             if (!data) {
                 res.status(404).send({
                   message: `Cannot delete company with id=${id}.`
                 });
-            } else if(buildings.findOne({companyName:data.name})){
-              res.status(403).send({
-                message: `Cannot delete company with buildings attached to it.`
+            } else {
+              res.status(200).send({
+                message: `The company selected was deleted`   
             });
-            }
-            res.send({ message: "The company selected was deleted"});
             res.send(data); 
-        })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "error while trying to delete the company" 
-            });
+            }    
+        })     
+        } else {
+            res.status(403).send({
+                message: 'Cannot delete a company with buildings attached to it.'
+            })
+        }
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+                err.message || "error while trying to delete the company" 
         });
+    });
 };
  //Get one of the companies by its id, updated it and save it on the DB. No need for next()
  // because there is only one POST metod
@@ -116,24 +124,24 @@ exports.update = (req, res) => {
     //validate request
     if ( 
         !req.body.name ||
-        !req.body.email ||
-        !req.body.contact ||
-        !req.body.buildings ||
-        !req.body.boilers ||
-        !req.body.maintenanceHours
+        !req.body.companyName ||
+        !req.body.address ||
+        !req.body.managerName ||
+        !req.body.phone ||
+        !req.body.boilerType 
     ) {
         res.status(400).send({ message: "Content cannot be empty!" });
         return;
     }
     //after both filters we do the update itself, create and save the new company
-    Companies.update({_id: req.query.id}, req.body)
+    Companies.findOneAndUpdate({_id: req.query._id}, req.body, { useFindAndModify: false })
         .then(data => {
             if(!data) {
                 res.status(404).send({
                     message: `Cannot update the company with the id of ${req.params.id}`
                 });
             } else {
-                res.send({ message: "Company udated!"});
+                res.send({ message: "Company updated!"});
             }
         })
         .catch(err => {
