@@ -10,18 +10,19 @@ const boilersType = db.boilersType;
 exports.create = (req, res) => {
     // Validation, already checks for null of the required values on the Schema
     // validation for the correct date format
-    const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+    const re = /^\d{4}\-\d{2}\-\d{2}$/;
     if (!req.body.installationDate) {
         if(
-            !req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||
-            !re.test(req.body.fabricationDate) || !re.test(req.body.expirationDate)
+            !req.body.lot || !req.body.companyName || !req.body.boilersTypeId || !req.body.fabricationDate || 
+            !req.body.expirationDate || !re.test(req.body.fabricationDate) || !re.test(req.body.expirationDate)
         ) {
             res.status(400).send({ message: 'Content can not be empty and dates must have the correct format'});
             return;
         }
-    } else  {
-        if(!req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||
-       !re.test(req.body.fabricationDate) || !re.test(req.body.installationDate) ||!re.test(req.body.expirationDate)
+    } else {
+        if(!req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate || 
+            !req.body.companyName || !re.test(req.body.fabricationDate) || !re.test(req.body.installationDate) ||
+            !re.test(req.body.expirationDate)
         ) {
             res.status(400).send({ message: 'Content can not be empty and dates must have the correct format'});
             return;
@@ -33,6 +34,7 @@ exports.create = (req, res) => {
         // _id:req.body._id,
         lot: req.body.lot,
         companyId: req.body.companyId,
+        companyName: req.body.companyName,
         boilersTypeId: req.body.boilersTypeId,
         installationDate: req.body.installationDate,
         fabricationDate: req.body.fabricationDate,
@@ -110,7 +112,7 @@ exports.filter = (req, res) => {
 // Update a boiler
 exports.update = (req, res) => {
     // Validation no empty field in the required params and correct date format.
-    const re = /^\d{1,2}\/\d{1,2}\/\d{4}$/;
+    const re = /^\d{4}\-\d{2}\-\d{2}$/;
     if (!req.body.installationDate) {
         if(
             !req.body.lot || !req.body.boilersTypeId || !req.body.fabricationDate || !req.body.expirationDate ||
@@ -127,7 +129,7 @@ exports.update = (req, res) => {
             return;
         }
     }
-    const id = req.query._id;
+    const id = req.query.id; //En la request solo existe id no _id
     //validates we are updating an existing boiler in the db, already done.
     boilers.findOneAndUpdate({_id: id}, req.body, { useFindAndModify: false })
     .then(data => {
@@ -135,7 +137,7 @@ exports.update = (req, res) => {
             res.status(404).send({
                 message: `Cannot update boiler with id-${id}. Maybe boiler was not found.`
             });
-        } else res.send({message: 'Boiler was update successfully'});
+        } else res.send({message: 'Boiler was updated successfully'});
     })
     .catch(err => {
         res.status(500).send({

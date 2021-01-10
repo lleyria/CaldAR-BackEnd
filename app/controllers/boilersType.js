@@ -10,7 +10,7 @@ exports.create = (req, res) => {
     const re = /^\d{1,2}\/\d{2,3}$/;
     //validate first for empty values in the doc
     if(!req.body.description || !req.body.type || !req.body.maxCapacity ||
-        !req.body.temperatureRange || !req.body.weight){            
+        !req.body.temperatureRange || !req.body.weight || !req.body.monthlyMaintenanceTime){            
             res.status(400).send({ message: 'Content can not be empty'});
             return;
     }
@@ -34,6 +34,7 @@ exports.create = (req, res) => {
         maxCapacity: req.body.maxCapacity,
         temperatureRange: req.body.temperatureRange,
         weight: req.body.weight,
+        monthlyMaintenanceTime: req.body.monthlyMaintenanceTime
     });
     //Save new type
     newType
@@ -113,7 +114,7 @@ exports.update = (req, res) => {
     // Validation
     if(
         !req.body.description || !req.body.type || !req.body.maxCapacity ||
-        !req.body.temperatureRange || !req.body.weight
+        !req.body.temperatureRange || !req.body.weight || !req.body.monthlyMaintenanceTime
         ) {
             res.status(400).send({ message: 'Content can not be empty'});
             return;
