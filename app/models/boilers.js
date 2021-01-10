@@ -9,6 +9,10 @@ module.exports = (mongoose) => {
                 type: String,
                 required: true
             },
+            companyName: {
+                type: String,
+                required: false,
+            },
             companyId: {
                 type: String,
                 required: false

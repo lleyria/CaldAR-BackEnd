@@ -26,6 +26,10 @@ module.exports = (mongoose) => {
                 type: Number,
                 required: true,
             },
+            monthlyMaintenanceTime: {
+                type: String,
+                required: true,
+            }
         })
     );
     return boilersType;
