@@ -55,7 +55,6 @@ exports.findOne = (req, res) => {
 
 // Create a new building
 exports.create = (req, res) => {
-  console.log(req.body)
   if (
     !req.body.buildingName ||
     !req.body.address ||
