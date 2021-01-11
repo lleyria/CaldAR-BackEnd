@@ -6,7 +6,6 @@ const Companies = db.companies;
 
 const regexObjectId = /^[a-f\d]{24}$/;
 const regexName = /^[a-zA-Z' ]+$/;
-const regexBoolean = /(true|false)$/;
 const regexAddress = /^[a-zA-Z0-9\s,'-]*$/;
 const regexPhoneNumber = /^[0-9]{7,}$/;
 const regexBoilerTypes = /([A-D '-]){1,8}$/;
@@ -58,14 +57,12 @@ exports.findOne = (req, res) => {
 exports.create = (req, res) => {
   if (
     !req.body.buildingName ||
-    !req.body.companyBuilding ||
     !req.body.address ||
     !req.body.managerName ||
     !req.body.phone ||
     !req.body.boilersId ||
-    !req.body.boilerTypes ||
-    !req.body.boilerAmount
-  ) {
+    !req.body.boilerTypes
+    ) {
     return res.status(400).send({ message: "Content can not be empty." });
   }
 
@@ -73,12 +70,6 @@ exports.create = (req, res) => {
   if (!regexName.test(req.body.buildingName)) {
     return res.status(400).send({
       message: "Invalid buildingName.",
-    });
-  }
-
-  if (!regexBoolean.test(req.body.companyBuilding)) {
-    return res.status(400).send({
-      message: "companyBuilding can only contain true or false values.",
     });
   }
 
@@ -100,21 +91,6 @@ exports.create = (req, res) => {
     });
   }
 
-  if (Array.isArray(req.body.boilersId)) {
-    const boilersId = req.body.boilersId;
-    for (let i = 0; i < boilersId.length; i++) {
-      if (!regexObjectId.test(boilersId[i])) {
-        return res.status(400).send({
-          message: "Every boilersId must be a string of 24 hex characters.",
-        });
-      }
-    }
-  } else {
-    return res.status(400).send({
-      message: "Invalid input. boilersId must be an Array.",
-    });
-  }
-
   if (!regexBoilerTypes.test(req.body.boilerTypes)) {
     return res.status(400).send({
       message: "A boiler type included is not available. Currently boilers types available are: A, B, C and D.",
@@ -129,14 +105,12 @@ exports.create = (req, res) => {
 
   const build = new buildings({
     buildingName: req.body.buildingName,
-    companyBuilding: req.body.companyBuilding,
     companyName: req.body.companyName,
     address: req.body.address,
     managerName: req.body.managerName,
     boilersId: req.body.boilersId,
     phone: req.body.phone,
-    boilerTypes: req.body.boilerTypes,
-    boilerAmount: req.body.boilerAmount,
+    boilerTypes: req.body.boilerTypes
   });
   build
     .save(build)
@@ -188,30 +162,9 @@ exports.update = (req, res) => {
     });
   }
 
-  if (Array.isArray(req.body.boilersId)) {
-    const boilersId = req.body.boilersId;
-    for (let i = 0; i < boilersId.length; i++) {
-      if (!regexObjectId.test(boilersId[i])) {
-        return res.status(400).send({
-          message: "Every boilersId must be a string of 24 hex characters.",
-        });
-      }
-    }
-  } else {
-    return res.status(400).send({
-      message: "Invalid input. boilersId must be an Array.",
-    });
-  }
-
   if (!regexBoilerTypes.test(req.body.boilerTypes)) {
     return res.status(400).send({
       message: "A boiler type included is not available. Currently boilers types available are: A, B, C and D.",
-    });
-  }
-
-  if (!regexOnlyNumber.test(req.body.boilerAmount)) {
-    return res.status(400).send({
-      message: "Invalid input. boilerAmount must be an int number.",
     });
   }
 
