@@ -11,6 +11,8 @@ const regexPhoneNumber = /^[0-9]{7,}$/;
 const regexBoilerTypes = /([A-D '-]){1,8}$/;
 const regexOnlyNumber = /^[0-9]*$/;
 
+const ObjectId = require("mongoose").Types.ObjectId;
+
 // Get all buildings
 exports.findAll = (req, res) => {
   if (Object.keys(req.query).length === 0) {
@@ -97,12 +99,6 @@ exports.create = (req, res) => {
     });
   }
 
-  if (!regexOnlyNumber.test(req.body.boilerAmount)) {
-    return res.status(400).send({
-      message: "Invalid input. boilerAmount must be an int number.",
-    });
-  }
-
   const build = new buildings({
     buildingName: req.body.buildingName,
     companyName: req.body.companyName,
@@ -131,51 +127,45 @@ exports.update = (req, res) => {
       msg: "Data to update can not be empty.",
     });
   }
-  // Format validation
-  if (!regexName.test(req.body.buildingName)) {
-    return res.status(400).send({
-      message: "Invalid buildingName.",
-    });
-  }
+//Format validation
+   if (!regexName.test(req.body.buildingName)) {
+     return res.status(400).send({
+       message: "Invalid buildingName.",
+     });
+   }
 
-  if (!regexBoolean.test(req.body.companyBuilding)) {
-    return res.status(400).send({
-      message: "companyBuilding can only contain true or false values.",
-    });
-  }
+   if (!regexAddress.test(req.body.address) || regexOnlyNumber.test(req.body.address)) {
+     return res.status(400).send({
+       message: "Invalid address. An address cannot contain only numbers.",
+     });
+   }
 
-  if (!regexAddress.test(req.body.address) || regexOnlyNumber.test(req.body.address)) {
-    return res.status(400).send({
-      message: "Invalid address. An address cannot contain only numbers.",
-    });
-  }
+   if (!regexName.test(req.body.managerName)) {
+     return res.status(400).send({
+       message: "Invalid managerName. It must has a minimun length of 5.",
+     });
+   }
 
-  if (!regexName.test(req.body.managerName) || req.body.managerName.length < 5) {
-    return res.status(400).send({
-      message: "Invalid managerName. It must has a minimun length of 5.",
-    });
-  }
+   if (!regexPhoneNumber.test(req.body.phone)) {
+     return res.status(400).send({
+       message: "Invalid phone. It must has a minimun length of 7 digits.",
+     });
+   }
 
-  if (!regexPhoneNumber.test(req.body.phone)) {
-    return res.status(400).send({
-      message: "Invalid phone. It must has a minimun length of 7 digits.",
-    });
-  }
+   if (!regexBoilerTypes.test(req.body.boilerTypes)) {
+     return res.status(400).send({
+       message: "A boiler type included is not available. Currently boilers types available are: A, B, C and D.",
+     });
+   }
 
-  if (!regexBoilerTypes.test(req.body.boilerTypes)) {
-    return res.status(400).send({
-      message: "A boiler type included is not available. Currently boilers types available are: A, B, C and D.",
-    });
-  }
 
-  const id = req.query.id;
-
+console.log("body", req.body)
   buildings
-    .findOneAndUpdate({ _id: id }, req.body, { useFindAndModify: false })
+    .findOneAndUpdate({ _id: ObjectId(req.query.id) }, req.body)
     .then((data) => {
       if (!data) {
         res.status(404).send({
-          msg: `Cannot update building with id=${id}.`,
+          msg: `Cannot update building with id=${_id}.`,
         });
       } else {
         res.send({ msg: "Building was updated successfully." });
@@ -197,7 +187,7 @@ exports.delete = (req, res) => {
         Companies.findOne({ buildings: req.query.id }).then((data) => {
           if (data === null) {
             buildings
-              .findOneAndRemove({ _id: req.query.id }, { useFindAndModify: false })
+              .findOneAndRemove( { _id: ObjectId(req.query.id) }, { useFindAndModify: false } )
               .then((data) => {
                 if (!data) {
                   return res.status(404).send({
