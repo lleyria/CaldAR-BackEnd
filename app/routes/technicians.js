@@ -1,22 +1,23 @@
 const technicians = require("../controllers/technicians");
 const router = require("express").Router();
+const authMiddleware = require("../Middleware/authMiddleware");
 
 // Retrieve all technicians
-router.get("/", technicians.findAll);
+router.get("/", authMiddleware, technicians.findAll);
 
 // Retrieve a single technician with id
-router.get("/", technicians.findById);
+router.get("/", authMiddleware, technicians.findById);
 
 // Get all technicians with a specific attribute
-router.get("/", technicians.findByAttribute);
+router.get("/", authMiddleware, technicians.findByAttribute);
 
 // Create a new technician
-router.post("/", technicians.create);
+router.post("/", authMiddleware, technicians.create);
 
 // Update a technician with id
-router.put("/", technicians.update);
+router.put("/", authMiddleware, technicians.update);
 
 // Delete technician with id
-router.delete("/", technicians.delete);
+router.delete("/", authMiddleware, technicians.delete);
 
 module.exports = router;
